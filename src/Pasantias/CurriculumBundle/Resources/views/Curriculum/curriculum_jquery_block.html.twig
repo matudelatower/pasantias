@@ -7,7 +7,7 @@
             var collectionHolder = $(e);
 
 // configura una enlace "Agregar una etiqueta"
-            var $addTagLink = $('<a href="#" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-plus"></span>Agregar</a>');
+            var $addTagLink = $('<a href="#" class="btn btn-default btn-sm">Agregar</a>');
             var $newLinkLi = $('<li></li>').append($addTagLink);
 
 
@@ -59,7 +59,7 @@
         }
 
         function addTagFormDeleteLink($tagFormLi) {
-            var $removeFormA = $('<a href="#" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-remove"> Eliminar</a>');
+            var $removeFormA = $('<a href="#" class="btn btn-default btn-sm">Eliminar</a>');
             $tagFormLi.append($removeFormA);
 
             $removeFormA.on('click', function(e) {

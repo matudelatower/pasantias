@@ -3,11 +3,11 @@
 // Obtiene el div que contiene la colección de etiquetas
 //var collectionHolder = $('#content_data ul');
         var domicilioCount = 0;
-        $('#midbox ul').each(function(i, e) {
+        $('ul[data-prototype]').each(function(i, e) {
             var collectionHolder = $(e);
 
 // configura una enlace "Agregar una etiqueta"
-            var $addTagLink = $('<a href="#" class="add_link">Agregar</a>');
+            var $addTagLink = $('<a href="#" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-plus"></span>Agregar</a>');
             var $newLinkLi = $('<li></li>').append($addTagLink);
 
 
@@ -59,7 +59,7 @@
         }
 
         function addTagFormDeleteLink($tagFormLi) {
-            var $removeFormA = $('<a href="#" class="close">Eliminar</a>');
+            var $removeFormA = $('<a href="#" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-remove"> Eliminar</a>');
             $tagFormLi.append($removeFormA);
 
             $removeFormA.on('click', function(e) {

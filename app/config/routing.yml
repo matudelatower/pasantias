@@ -1,0 +1,76 @@
+theme:
+    resource: "@ThemeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+# Internal routing configuration to handle ESI
+# ****** WARNING ******
+# This route should be enabled with caution as it can open a security vulnerability
+# see http://symfony.com/blog/security-release-symfony-2-0-20-and-2-1-5-released for more information
+# ****** WARNING ******
+#_internal:
+#    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#    prefix:   /_internal
+curriculum:
+    resource: "@CurriculumBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+carrera:
+    resource: "@CurriculumBundle/Resources/config/routing.yml"
+    prefix:   /
+#
+UsuariosBundle:
+    resource: "@UsuariosBundle/Resources/config/routing.yml"
+    prefix:   /usuario
+#
+ubicacion:
+    resource: "@UbicacionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+areas:
+    resource: "@CurriculumBundle/Resources/config/routing.yml"
+    prefix:   /
+
+#localidades:
+#    resource: "@UbicacionBundle/Resources/config/routing.yml"
+#    prefix:   /pasantias/localidades
+
+#peticiones:
+#    resource: "@PeticionesBundle/Resources/config/routing.yml"
+#    prefix:   /pasantias
+#
+empresas:
+    resource: "@EmpresasBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+tipos_trabajo:
+    resource: "@EmpresasBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+solicitudes:
+    resource: "@EmpresasBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+pasantias:
+    resource: "@PasantiasBundle/Resources/config/routing.yml"
+    prefix:   /
+
+#registrar:
+#    resource: "@UsuariosBundle/Resources/config/routing.yml"
+#    prefix:   /
+
+campo:
+    resource: "@CurriculumBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+
+
+#pagina_estatica:
+#    pattern: /{bundle}/{pagina}/
+#    defaults: { _controller: PasantiasBundle:Sitio:estatica ,pagina: null}
+
+
+# Internal routing configuration to handle ESI
+#_internal:
+#    resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
+#    prefix:   /_internal

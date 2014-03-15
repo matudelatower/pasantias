@@ -1,0 +1,53 @@
+#usuarios_homepage:
+#    pattern:  /hello/{name}
+#    defaults: { _controller: UsuariosBundle:Default:index }
+    
+registrarse:
+    pattern: /registrar
+    defaults: { _controller: UsuariosBundle:Default:registrar }
+    
+usuarios_registrar:
+    pattern: /registrar/registrarse
+    defaults: { _controller: UsuariosBundle:Default:create }
+
+usuarios:
+    pattern: /usuarios
+    defaults: { _controller: UsuariosBundle:Usuarios:index }
+    
+usuarios_show:
+    pattern:  /usuarios/{id}/show
+    defaults: { _controller: "UsuariosBundle:Usuarios:show" }
+
+usuarios_new:
+    pattern:  /usuarios/new
+    defaults: { _controller: "UsuariosBundle:Usuarios:new" }
+
+usuarios_create:
+    pattern:  /usuarios/create
+    defaults: { _controller: "UsuariosBundle:Usuarios:create" }
+    requirements: { _method: post }
+
+usuarios_edit:
+    pattern:  /usuarios/{id}/edit
+    defaults: { _controller: "UsuariosBundle:Usuarios:edit" }
+    
+
+usuarios_update:
+    pattern:  /usuarios/{id}/update
+    defaults: { _controller: "UsuariosBundle:Usuarios:update" }
+    requirements: { _method: put }
+
+usuarios_delete:
+    pattern:  /usuarios/{id}/delete
+    defaults: { _controller: "UsuariosBundle:Usuarios:delete" }
+    requirements: { _method: post }
+
+login:
+    pattern: /login
+    defaults: { _controller: UsuariosBundle:Default:login }
+ 
+login_check:
+    pattern: /login_check
+ 
+logout:
+    pattern: /logout

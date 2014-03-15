@@ -1,0 +1,74 @@
+{% extends 'ThemeBundle:Default:base.html.twig' %}
+{% block contenido %}
+<h1>Empresas</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Nombreempresa</th>
+            <td>{{ entity.nombreEmpresa }}</td>
+        </tr>
+        <tr>
+            <th>Personacontacto</th>
+            <td>{{ entity.personaContacto }}</td>
+        </tr>
+        <tr>
+            <th>Telcontacto</th>
+            <td>{{ entity.telContacto }}</td>
+        </tr>
+        <tr>
+            <th>Mailcontacto</th>
+            <td>{{ entity.mailContacto }}</td>
+        </tr>
+        <tr>
+            <th>Paginaweb</th>
+            <td>{{ entity.paginaWeb }}</td>
+        </tr>
+
+        <tr>
+            <th>Domicilios</th>
+
+              {% for domicilios in entity.domicilio %}
+        <tr><th></th><td> <HR></td></tr>
+        <tr><th>Calle</th><td> {{ domicilios.calle }} </td></tr>
+        <tr><th>Numero</th><td> {{ domicilios.numero }} </td></tr>
+        <tr><th>Depto</th><td> {{ domicilios.depto }} </td></tr>
+        <tr><th>Piso</th><td> {{ domicilios.piso }} </td></tr>
+        <tr><th>Localidad</th><td> {{ domicilios.localidad }} </td></tr>
+
+
+
+                        {#{{ form_widget(domicilios) }}#}
+
+                    {#<li>{{ form_widget(domicilios) }}</li>#}
+
+        {% endfor %}
+
+        </tr>
+
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('empresas') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('empresas_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('empresas_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    </ul>
+{%endblock%}

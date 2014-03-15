@@ -1,0 +1,21 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link href="{{asset('bundles/theme/css/estilo.css')}}" rel="stylesheet" type="text/css" /> 
+    <title>Bolsa de Pasant&iacute;as</title>
+</head>
+<div id="contenedor">
+    <div id="principal">
+        <div id="datos_login">
+            <div id="registrar">
+                <form action="{{ path('usuarios_registrar')}}" method="post" {{ form_enctype(form) }}>
+                    {{ form_widget(form) }}
+                    
+
+                    <input type="submit"  value="Registrarse"/>
+                </form>
+            </div>
+        </div>
+        <div id="pie">
+        </div>
+    </div>
+</div>

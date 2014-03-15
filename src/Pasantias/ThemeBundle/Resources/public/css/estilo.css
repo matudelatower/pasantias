@@ -1,0 +1,176 @@
+#contenedor{
+    margin: 0px auto !important;
+    width:1024px;
+    font-family:Times New Roman !important;
+}
+
+#principal{
+    width:1024px ;
+    float:left;
+    background-color:#FFFFCC;
+}
+
+#header{
+    width:1024px;
+    float:left;
+}
+
+
+#logo{
+    width:80%;
+    float: top;
+    height:140px;
+    background-image:url(../images/header.png);
+    background-color:#FFFFCC;
+}
+
+#usuario{
+    margin-top:5px;
+    margin-left:10px;
+    margin-right:10px;
+    width:1004px;
+    float:left;
+    height:70px;
+    background-color:#FFFFCC;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius: 10px;
+    border:2px solid #000000;
+}
+
+#datos_usuario{
+    margin-top:5px;
+    margin-left:15px;
+    width:800px;
+    float:left;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+}
+
+#chau_sesion{
+    margin-top:3px;
+    margin-right:15px;
+    float:right;
+}
+
+#datos_login{
+    background:url(../images/login.png);
+    width:1024px;
+    height:350px;
+    background-color:#FFFFCC;
+}
+
+
+#login{
+    margin-left:300px;
+    padding-top:180px;
+    float:left;
+    text-align:left;
+}
+#registrar{
+    margin-left:300px;
+    padding-top:180px;
+    float:left;
+    text-align:left;
+}
+
+#login input{
+    border:none;
+    min-width:200px;
+    width:115px;
+    height:20px;
+    background-color:#CCCCFF;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:14px;
+    text-align:left;
+}
+
+.dos{
+    margin-left:15px;
+}
+
+#login .button{
+    margin-left:200px;
+    margin-top:10px;
+    background:url(../images/Ingresar.png) no-repeat;
+    border:none;
+    width:120px;
+    *margin-left:30px;
+    height:41px;
+}
+
+#login label{
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:15px;
+    text-align:center;
+}
+
+#datos{
+    width:1024px;
+    float:left;
+}
+
+#sidebar nav{
+    margin-left:10px;
+    margin-top:10px;
+    width:190px;
+    padding-top:5px;
+    min-height:200px;
+    float:left;
+    background-color:#FFFF99;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius: 10px;
+    border:2px solid #000000;
+}
+
+#contenido{
+    margin-top:10px;
+    padding-top:5px;
+    padding-left:5px;
+    margin-left:10px;
+    float:left;
+    width:77.5%;
+    min-height:200px;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius: 10px;
+    border:2px solid #000000;
+    /*background-color:#FFFF99;*/
+}
+
+#titulo{
+    float:left;
+    height:20px;
+    width:50% !important;
+}
+
+#content_data{
+    float:left;
+    width:100% !important;
+    height:100% !important;
+}
+
+#navegacion{
+    margin-left:1px;
+    list-style:none;
+}
+
+#navegacion li{
+    margin-left:-35px;
+    float:left;
+    text-decoration:none;
+}
+
+.pmenu{
+    margin-top:-2px;
+    text-align:center;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    color:#FF0000;
+}
+
+#pie{
+
+}

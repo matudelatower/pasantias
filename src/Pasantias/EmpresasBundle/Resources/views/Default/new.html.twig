@@ -1,0 +1,9 @@
+{% extends 'ThemeBundle:Default:base.html.twig' %}
+{% block subtitulo %}Empresas{% endblock %}
+{% block contenido %}
+<form action="{{ path('empresas_new') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>
+{% endblock %}

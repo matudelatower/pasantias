@@ -1,0 +1,11 @@
+parameters:
+#    empresas.example.class: Pasantias\EmpresasBundle\Example
+
+services:
+#    empresas.example:
+#        class: %empresas.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    empresas.collection_type_extension:
+        class: Pasantias\EmpresasBundle\Form\Extension\CollectionTypeExtension
+        tags:
+            - { name: form.type_extension, alias: collection }

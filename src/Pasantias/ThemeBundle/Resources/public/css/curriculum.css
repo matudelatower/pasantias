@@ -1,0 +1,104 @@
+/* 
+    Document   : curriculum
+    Created on : 22/02/2013, 17:57:55
+    Author     : matias
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+/*body {
+    width:90%;
+    margin:0 auto;
+    padding:0;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+}*/
+
+#page0 pre {
+    background:#DDD;
+    border:dashed #A00 1px;
+    padding-left:1em;
+}
+/* tab styles */
+#tabrow {
+    margin:0;
+    padding-left:1ex;
+    min-width:800px;
+    font-size:12px;
+    letter-spacing:0.3pt;
+    line-height:1;
+    height:24px;
+}
+
+#tabrow ul {
+    margin:0;
+    padding:0;
+    list-style:none;
+    position:absolute;
+    z-index:2;
+}
+
+#tabrow li {
+    float:left;
+    background-color:#F7B10F;
+    color:#000;
+    margin-right:5px;
+    padding:5px;
+    border-radius:5px 5px 0 0;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-radius:5px 5px 0 0;
+    border-top:solid #96460F 1px;
+    border-left:solid #96460F 1px;
+    border-right:solid #96460F 1px;
+    border-bottom-width:0;
+    border-bottom-color:transparent;
+    cursor:pointer;
+}
+
+#tabrow li.select {
+    background-color:#FFF6D5;
+    color:#763509;
+    height:14px;
+}
+
+/* page styles */
+#topbox, #midbox {
+    width:95%;
+    border-radius:5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+#topbox {
+    background-color:#FFF1C7;
+    border: solid #96460F 1px;
+    margin-bottom:2em;
+}
+#midbox {
+    border: solid #96460F 1px;
+    /*    background-color:#FFF6D5;*/
+}
+#midbox p {
+    margin:0;
+    padding-bottom:1ex;
+}
+h1 {
+    font-size:x-large;
+    color:#d18846;
+}
+h2 {
+    color:#000;
+    font-size:large;
+    font-family:Arial, Helvetica, sans-serif;
+}
+h1, #topbox h2 {
+    margin:0 15pt;
+    padding: 5pt 0;
+}
+div.subpage {
+    padding:1em;
+}
+
+
+
+

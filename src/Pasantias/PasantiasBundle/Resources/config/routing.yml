@@ -1,0 +1,3 @@
+pasantias_homepage:
+    pattern:  /
+    defaults: { _controller: PasantiasBundle:Default:index }

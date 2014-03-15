@@ -1,0 +1,66 @@
+#ubicacion_homepage:
+#    pattern:  /
+#    defaults: { _controller: UbicacionBundle:Provincias:index }
+pasantias_provincias:
+    pattern:  /provincias
+    defaults: { _controller: "UbicacionBundle:Provincias:index" }
+
+pasantias_provincias_show:
+    pattern:  /provincias/{id}/show
+    defaults: { _controller: "UbicacionBundle:Provincias:show" }
+
+pasantias_provincias_new:
+    pattern:  /provincias/new
+    defaults: { _controller: "UbicacionBundle:Provincias:new" }
+
+pasantias_provincias_create:
+    pattern:  /provincias/create
+    defaults: { _controller: "UbicacionBundle:Provincias:create" }
+    requirements: { _method: post }
+
+pasantias_provincias_edit:
+    pattern:  /provincias/{id}/edit
+    defaults: { _controller: "UbicacionBundle:Provincias:edit" }
+
+pasantias_provincias_update:
+    pattern:  /provincias/{id}/update
+    defaults: { _controller: "UbicacionBundle:Provincias:update" }
+    requirements: { _method: post }
+
+pasantias_provincias_delete:
+    pattern:  /provincias/{id}/delete
+    defaults: { _controller: "UbicacionBundle:Provincias:delete" }
+    requirements: { _method: post }
+    
+#localidades
+
+pasantias_localidades:
+    pattern:  /localidades
+    defaults: { _controller: "UbicacionBundle:Localidades:index" }
+
+pasantias_localidades_show:
+    pattern:  /localidades/{id}/show
+    defaults: { _controller: "UbicacionBundle:Localidades:show" }
+
+pasantias_localidades_new:
+    pattern:  /localidades/new
+    defaults: { _controller: "UbicacionBundle:Localidades:new" }
+
+pasantias_localidades_create:
+    pattern:  /localidades/create
+    defaults: { _controller: "UbicacionBundle:Localidades:create" }
+    requirements: { _method: post }
+
+pasantias_localidades_edit:
+    pattern:  /localidades/{id}/edit
+    defaults: { _controller: "UbicacionBundle:Localidades:edit" }
+
+pasantias_localidades_update:
+    pattern:  /localidades/{id}/update
+    defaults: { _controller: "UbicacionBundle:Localidades:update" }
+    requirements: { _method: post }
+
+pasantias_localidades_delete:
+    pattern:  /localidades/{id}/delete
+    defaults: { _controller: "UbicacionBundle:Localidades:delete" }
+    requirements: { _method: post }

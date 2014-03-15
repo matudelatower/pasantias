@@ -1,0 +1,124 @@
+#empresas_homepage:
+#    pattern:  /empresas
+#    defaults: { _controller: EmpresasBundle:Default:index }
+#
+#empresas_new:
+#    pattern: /empresas/new
+#    defaults: { _controller: EmpresasBundle:Default:new }
+
+#peticiones_homepage:
+#    pattern:  /peticiones
+#    defaults: { _controller: PeticionesBundle:Default:index }
+#
+#peticiones_new:
+#    pattern: /peticiones/new
+#    defaults: { _controller: PeticionesBundle:Default:new }
+# 
+#peticiones_register:
+#    pattern: /peticiones/register
+#    defaults: { _controller: PeticionesBundle:Default:register }
+
+empresas:
+    pattern:  /empresas
+    defaults: { _controller: "EmpresasBundle:Empresas:index" }
+
+_empresas:
+    pattern:  /empresas/
+    defaults: { _controller: "EmpresasBundle:Empresas:index" }
+
+empresas_show:
+    pattern:  /empresas/{id}/show
+    defaults: { _controller: "EmpresasBundle:Empresas:show" }
+
+empresas_new:
+    pattern:  /empresas/new
+    defaults: { _controller: "EmpresasBundle:Empresas:new" }
+
+empresas_create:
+    pattern:  /empresas/create
+    defaults: { _controller: "EmpresasBundle:Empresas:create" }
+    requirements: { _method: post }
+
+empresas_edit:
+    pattern:  /empresas/{id}/edit
+    defaults: { _controller: "EmpresasBundle:Empresas:edit" }
+
+empresas_update:
+    pattern:  /empresas/{id}/update
+    defaults: { _controller: "EmpresasBundle:Empresas:update" }
+    requirements: { _method: post }
+
+empresas_delete:
+    pattern:  /empresas/{id}/delete
+    defaults: { _controller: "EmpresasBundle:Empresas:delete" }
+    requirements: { _method: post }
+    
+#Solicitudes
+
+solicitud:
+    pattern:  /solicitud
+    defaults: { _controller: "EmpresasBundle:Solicitudes:index" }
+
+solicitud_show:
+    pattern:  /solicitud/{id}/show
+    defaults: { _controller: "EmpresasBundle:Solicitudes:show" }
+
+solicitud_new:
+    pattern:  /solicitud/new
+    defaults: { _controller: "EmpresasBundle:Solicitudes:new" }
+
+solicitud_create:
+    pattern:  /solicitud/create
+    defaults: { _controller: "EmpresasBundle:Solicitudes:create" }
+    requirements: { _method: post }
+
+solicitud_edit:
+    pattern:  /solicitud/{id}/edit
+    defaults: { _controller: "EmpresasBundle:Solicitudes:edit" }
+
+solicitud_update:
+    pattern:  /solicitud/{id}/update
+    defaults: { _controller: "EmpresasBundle:Solicitudes:update" }
+    requirements: { _method: post }
+
+solicitud_delete:
+    pattern:  /solicitud/{id}/delete
+    defaults: { _controller: "EmpresasBundle:Solicitudes:delete" }
+    requirements: { _method: post }
+    
+#Tipos Trabajo
+
+tipo_trabajo:
+    pattern:  /tipo_trabajo
+    defaults: { _controller: "EmpresasBundle:TiposTrabajo:index" }
+
+tipo_trabajo_show:
+    pattern:  /tipo_trabajo/{id}/show
+    defaults: { _controller: "EmpresasBundle:TiposTrabajo:show" }
+
+tipo_trabajo_new:
+    pattern:  /tipo_trabajo/new
+    defaults: { _controller: "EmpresasBundle:TiposTrabajo:new" }
+
+tipo_trabajo_create:
+    pattern:  /tipo_trabajo/create
+    defaults: { _controller: "EmpresasBundle:TiposTrabajo:create" }
+    requirements: { _method: post }
+
+tipo_trabajo_edit:
+    pattern:  /tipo_trabajo/{id}/edit
+    defaults: { _controller: "EmpresasBundle:TiposTrabajo:edit" }
+
+tipo_trabajo_update:
+    pattern:  /tipo_trabajo/{id}/update
+    defaults: { _controller: "EmpresasBundle:TiposTrabajo:update" }
+    requirements: { _method: post }
+
+tipo_trabajo_delete:
+    pattern:  /tipo_trabajo/{id}/delete
+    defaults: { _controller: "EmpresasBundle:TiposTrabajo:delete" }
+    requirements: { _method: post }
+    
+select_localidades:
+    pattern:  /empresas/localidades
+    defaults: { _controller: "EmpresasBundle:Empresas:localidades" }   

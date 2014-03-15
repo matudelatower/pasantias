@@ -1,0 +1,40 @@
+{% extends 'ThemeBundle:Default:base.html.twig' %}
+{% block contenido %}
+<h1>Provincias list</h1>
+
+<table class="table table-striped table-hover ">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombprovincia</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('pasantias_provincias_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nombreProvincia }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('pasantias_provincias_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('pasantias_provincias_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div class="navigation">
+    {{ knp_pagination_render(entities) }}
+</div>
+
+<a class="btn btn-primary" href="{{ path('pasantias_provincias_new') }}">
+    Crear Nuevo
+</a>
+
+{%endblock%}

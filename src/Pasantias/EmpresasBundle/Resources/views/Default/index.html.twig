@@ -1,0 +1,29 @@
+{% extends 'ThemeBundle:Default:base.html.twig' %}
+{% block contenido %}
+Empresas index
+<br><table id="table" class="sortable">
+    <thead><tr>
+            <th scope="col" style="font-size: 10px;"><h3>&numero;</h3></th>
+<th>Nombre</h3></th>
+<th>Persona</h3></th>
+<th>Telefono</h3></th>
+<th>Mail</h3></th>
+<th><h3></h3></th>
+</thead>
+
+<tbody>
+{% for empresa in Empresas|sort %}
+        <tr>
+            <td  align="center"></td>
+            <td>{{ empresa.nombempresa }} </td>
+            <td>{{ empresa.personacontacto }} </td>
+            <td>{{ empresa.telcontacto }} </td>
+            <td>{{ empresa.mailcontacto }} </td>
+            <td>boton </td>
+            
+            </tr>
+{% endfor %}
+        </tbody>
+    </table>
+
+{% endblock%}

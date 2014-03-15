@@ -1,0 +1,228 @@
+#curriculum_homepage:
+#    pattern:  
+#    defaults: { _controller: CurriculumBundle:Curriculum:index }
+
+curriculum_homepage:
+    pattern:  /curriculum
+    defaults: { _controller: "CurriculumBundle:Curriculum:index" }
+
+curriculum_show:
+    pattern:  /curriculum/{id}/show
+    defaults: { _controller: "CurriculumBundle:Curriculum:show" }
+
+curriculum_new:
+    pattern:  /curriculum/new
+    defaults: { _controller: "CurriculumBundle:Curriculum:new" }
+
+curriculum_create:
+    pattern:  /curriculum/create
+    defaults: { _controller: "CurriculumBundle:Curriculum:create" }
+    requirements: { _method: post }
+
+curriculum_edit:
+    pattern:  /curriculum/{id}/edit
+    defaults: { _controller: "CurriculumBundle:Curriculum:edit" }
+
+curriculum_update:
+    pattern:  /curriculum/{id}/update
+    defaults: { _controller: "CurriculumBundle:Curriculum:update" }
+    requirements: { _method: post }
+
+curriculum_delete:
+    pattern:  /curriculum/{id}/delete
+    defaults: { _controller: "CurriculumBundle:Curriculum:delete" }
+    requirements: { _method: post }
+    
+carrera_homepage:
+    pattern:  /carrera
+    defaults: { _controller: "CurriculumBundle:Carrera:index" }
+    
+carrera_show:
+    pattern:  /carrera/{id}/show
+    defaults: { _controller: "CurriculumBundle:Carrera:show" }
+
+carrera_new:
+    pattern:  /carrera/new
+    defaults: { _controller: "CurriculumBundle:Carrera:new" }
+
+carrera_create:
+    pattern:  /carrera/create
+    defaults: { _controller: "CurriculumBundle:Carrera:create" }
+    requirements: { _method: post }
+
+carrera_edit:
+    pattern:  /carrera/{id}/edit
+    defaults: { _controller: "CurriculumBundle:Carrera:edit" }
+
+carrera_update:
+    pattern:  /carrera/{id}/update
+    defaults: { _controller: "CurriculumBundle:Carrera:update" }
+    requirements: { _method: post }
+
+carrera_delete:
+    pattern:  /carrera/{id}/delete
+    defaults: { _controller: "CurriculumBundle:Carrera:delete" }
+    requirements: { _method: post }
+    
+tipo_carrera_homepage:
+    pattern:  /tipo_carrera
+    defaults: { _controller: "CurriculumBundle:TipoCarrera:index" }
+    
+tipo_carrera_show:
+    pattern:  /tipo_carrera/{id}/show
+    defaults: { _controller: "CurriculumBundle:TipoCarrera:show" }
+
+tipo_carrera_new:
+    pattern:  /tipo_carrera/new
+    defaults: { _controller: "CurriculumBundle:TipoCarrera:new" }
+
+tipo_carrera_create:
+    pattern:  /tipo_carrera/create
+    defaults: { _controller: "CurriculumBundle:TipoCarrera:create" }
+    requirements: { _method: post }
+
+tipo_carrera_edit:
+    pattern:  /tipo_carrera/{id}/edit
+    defaults: { _controller: "CurriculumBundle:TipoCarrera:edit" }
+
+tipo_carrera_update:
+    pattern:  /tipo_carrera/{id}/update
+    defaults: { _controller: "CurriculumBundle:TipoCarrera:update" }
+    requirements: { _method: post }
+
+tipo_carrera_delete:
+    pattern:  /tipo_carrera/{id}/delete
+    defaults: { _controller: "CurriculumBundle:TipoCarrera:delete" }
+    requirements: { _method: post }
+    
+area:
+    pattern:  /area/
+    defaults: { _controller: "CurriculumBundle:Area:index" }
+
+area_show:
+    pattern:  /area/{id}/show
+    defaults: { _controller: "CurriculumBundle:Area:show" }
+
+area_new:
+    pattern:  /area/new
+    defaults: { _controller: "CurriculumBundle:Area:new" }
+
+area_create:
+    pattern:  /area/create
+    defaults: { _controller: "CurriculumBundle:Area:create" }
+    requirements: { _method: post }
+
+area_edit:
+    pattern:  /area/{id}/edit
+    defaults: { _controller: "CurriculumBundle:Area:edit" }
+
+area_update:
+    pattern:  /area/{id}/update
+    defaults: { _controller: "CurriculumBundle:Area:update" }
+    requirements: { _method: post }
+
+area_delete:
+    pattern:  /area/{id}/delete
+    defaults: { _controller: "CurriculumBundle:Area:delete" }
+    requirements: { _method: post }
+    
+sub_area:
+    pattern:  /sub_area/
+    defaults: { _controller: "CurriculumBundle:SubArea:index" }
+
+sub_area_show:
+    pattern:  /sub_area/{id}/show
+    defaults: { _controller: "CurriculumBundle:SubArea:show" }
+
+sub_area_new:
+    pattern:  /sub_area/new
+    defaults: { _controller: "CurriculumBundle:SubArea:new" }
+
+sub_area_create:
+    pattern:  /sub_area/create
+    defaults: { _controller: "CurriculumBundle:SubArea:create" }
+    requirements: { _method: post }
+
+sub_area_edit:
+    pattern:  /sub_area/{id}/edit
+    defaults: { _controller: "CurriculumBundle:SubArea:edit" }
+
+sub_area_update:
+    pattern:  /sub_area/{id}/update
+    defaults: { _controller: "CurriculumBundle:SubArea:update" }
+    requirements: { _method: post }
+
+sub_area_delete:
+    pattern:  /sub_area/{id}/delete
+    defaults: { _controller: "CurriculumBundle:SubArea:delete" }
+    requirements: { _method: post }
+    
+#Nivel
+
+nivel:
+    pattern:  /nivel/
+    defaults: { _controller: "CurriculumBundle:Nivel:index" }
+
+nivel_show:
+    pattern:  /nivel/{id}/show
+    defaults: { _controller: "CurriculumBundle:Nivel:show" }
+
+nivel_new:
+    pattern:  /nivel/new
+    defaults: { _controller: "CurriculumBundle:Nivel:new" }
+
+nivel_create:
+    pattern:  /nivel/create
+    defaults: { _controller: "CurriculumBundle:Nivel:create" }
+    requirements: { _method: post }
+
+nivel_edit:
+    pattern:  /nivel/{id}/edit
+    defaults: { _controller: "CurriculumBundle:Nivel:edit" }
+
+nivel_update:
+    pattern:  /nivel/{id}/update
+    defaults: { _controller: "CurriculumBundle:Nivel:update" }
+    requirements: { _method: post }
+
+nivel_delete:
+    pattern:  /nivel/{id}/delete
+    defaults: { _controller: "CurriculumBundle:Nivel:delete" }
+    requirements: { _method: post }
+    
+#Campo
+
+campo:
+    pattern:  /campo/
+    defaults: { _controller: "CurriculumBundle:Campo:index" }
+
+campo_show:
+    pattern:  /campo/{id}/show
+    defaults: { _controller: "CurriculumBundle:Campo:show" }
+
+campo_new:
+    pattern:  /campo/new
+    defaults: { _controller: "CurriculumBundle:Campo:new" }
+
+campo_create:
+    pattern:  /campo/create
+    defaults: { _controller: "CurriculumBundle:Campo:create" }
+    requirements: { _method: post }
+
+campo_edit:
+    pattern:  /campo/{id}/edit
+    defaults: { _controller: "CurriculumBundle:Campo:edit" }
+
+campo_update:
+    pattern:  /campo/{id}/update
+    defaults: { _controller: "CurriculumBundle:Campo:update" }
+    requirements: { _method: post }
+
+campo_delete:
+    pattern:  /campo/{id}/delete
+    defaults: { _controller: "CurriculumBundle:Campo:delete" }
+    requirements: { _method: post }
+    
+select_subareas:
+    pattern:  /curriculum/subareas
+    defaults: { _controller: "CurriculumBundle:Curriculum:subareas" } 

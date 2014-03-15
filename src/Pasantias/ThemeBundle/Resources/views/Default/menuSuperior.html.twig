@@ -1,0 +1,82 @@
+{%block menu%}
+<div class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{path('pasantias_homepage')}}">Inicio</a>
+    </div>
+    
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+        {% if is_granted('ROLE_ADMIN') %}
+            {% set rol= {'0':'ROLE_ADMIN'} %}
+        {% else %}
+            {% set rol= usuario.getRoles() %}
+
+        {% endif %}
+
+        {#{% set menu = knp_menu_get('PasantiasBundle:Builder:mainMenu', [], {'usuario': rol} ) %}
+        {{ knp_menu_render(menu) }}#}
+        <ul class="nav navbar-nav">
+            {% if is_granted('ROLE_ALUMNO') %}
+            <li><a href="{{path('curriculum_homepage')}}">CV</a></li>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ubicacion <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{path('pasantias_provincias')}}">Provincias</a></li>
+                    <li><a href="{{path('pasantias_localidades')}}">Localidades</a></li>
+                   {# <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Dropdown header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>#}
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Carreras <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{path('carrera_homepage')}}">Carrera</a></li>
+                    <li><a href="{{path('tipo_carrera_homepage')}}">Tipo Carrera</a></li>                   
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Areas <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{path('area')}}">Area</a></li>
+                    <li><a href="{{path('sub_area')}}">Sub Area</a></li>                   
+                </ul>
+            </li>
+            <li><a href="{{path('campo')}}">Campo</a></li>
+            <li><a href="{{path('nivel')}}">Nivel</a></li>
+            {% endif %}
+            {% if is_granted('ROLE_EMPRESA') or is_granted('ROLE_ADMIN') %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{path('empresas')}}">Empresa</a></li>
+                    <li><a href="{{path('solicitud')}}">Solicitud</a></li>                   
+                </ul>
+            </li>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{path('tipo_trabajo')}}">Tipo Trabajo</a></li>
+            {% endif %}
+        </ul>
+    
+        <ul class="nav navbar-nav navbar-right">                
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ usuario.username}} <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Perfil</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ path('logout') }}">Cerrar Sesion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+{%endblock%}

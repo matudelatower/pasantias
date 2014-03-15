@@ -1,0 +1,50 @@
+{% extends 'ThemeBundle:Default:base.html.twig' %}
+{% block contenido %}
+<h1>Solicitudes list</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fechadesde</th>
+            <th>Fechahasta</th>
+            <th>Perfilpostulante</th>
+            <th>Conocrequeridos</th>
+            <th>Nivelcarreracandidato</th>
+            <th>Solicitudatendida</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('solicitud_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{% if entity.fechaDesde %}{{ entity.fechaDesde|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.fechaHasta %}{{ entity.fechaHasta|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.perfilPostulante }}</td>
+            <td>{{ entity.conocRequeridos }}</td>
+            <td>{{ entity.nivelCarreraCandidato }}</td>
+            <td>{{ entity.solicitudAtendida }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('solicitud_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('solicitud_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+{%endblock%}

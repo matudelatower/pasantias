@@ -1,0 +1,56 @@
+{% extends 'ThemeBundle:Default:base.html.twig' %}
+{% block contenido %}
+<h1>Solicitudes</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Fechadesde</th>
+            <td>{{ entity.fechaDesde|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Fechahasta</th>
+            <td>{{ entity.fechaHasta|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Perfilpostulante</th>
+            <td>{{ entity.perfilPostulante }}</td>
+        </tr>
+        <tr>
+            <th>Conocrequeridos</th>
+            <td>{{ entity.conocRequeridos }}</td>
+        </tr>
+        <tr>
+            <th>Nivelcarreracandidato</th>
+            <td>{{ entity.nivelCarreraCandidato }}</td>
+        </tr>
+        <tr>
+            <th>Solicitudatendida</th>
+            <td>{{ entity.solicitudAtendida }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('solicitud') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{%endblock%}

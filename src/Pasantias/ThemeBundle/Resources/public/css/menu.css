@@ -1,0 +1,81 @@
+/* 
+    Document   : menuc
+    Created on : 03-may-2013, 2:46:37
+    Author     : root
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+/*#sidebar nav{
+    margin-left:10px;
+    margin-top:10px;
+    width:190px;
+    padding-top:5px;
+    min-height:200px;
+    float:left;
+    background-color:#FFFF99;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius: 10px;
+    border:2px solid #000000;
+        -moz-border-radius:5px;
+            -webkit-border-radius:5px;
+            border-radius:5px;
+            -webkit-box-shadow:1px 1px 3px #888;
+            -moz-box-shadow:1px 1px 3px #888;
+}*/
+#sidebar nav li{border-bottom:1px solid #FFF;}
+#sidebar nav ul li, #sidebar nav li:last-child{border:none}	
+#sidebar nav a{
+    display:block;
+    color: #000000;
+    text-decoration:none;
+    font-family:'Helvetica', Arial, sans-serif;
+    font-size:13px;
+    padding:3px 5px;
+    /*text-shadow:1px 1px 1px #325179;*/
+}
+#sidebar nav a:hover{
+    color:#F9B855;
+    -webkit-transition: color 0.2s linear;
+}
+/*#sidebar nav ul a{background-color:#2961A9;}*/
+#sidebar nav ul a:hover{
+    background-color:#FFFF99;
+    color:#2961A9;
+    text-shadow:none;
+    -webkit-transition: color, background-color 0.2s linear;
+}
+#sidebar nav ul{
+    display:block;
+    background-color:#F7B10F;
+    margin:0;
+    padding:0;
+    width:130px;
+    list-style:none;
+    border-radius:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius: 10px;
+}
+/*#sidebar nav ul{background-color:#2961A9;}*/
+
+#sidebar nav ul .last{
+
+  border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+
+}
+#sidebar nav li ul {display:none;}
+
+#sidebar nav ul li ul li{
+    background-color: #FFF6D5;
+
+}
+
+
+#sidebar nav ul li ul li a{
+    color: #96460F;
+}
+
+

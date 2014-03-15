@@ -1,0 +1,11 @@
+parameters:
+#    curriculum.example.class: Pasantias\CurriculumBundle\Example
+
+services:
+#    curriculum.example:
+#        class: %curriculum.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    curriculum.collection_type_extension:
+            class: Pasantias\EmpresasBundle\Form\Extension\CollectionTypeExtension
+            tags:
+                - { name: form.type_extension, alias: collection }

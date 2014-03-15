@@ -1,0 +1,19 @@
+{% extends 'ThemeBundle:Default:base.html.twig' %}
+{% block contenido %}
+<h1>Nivel creation</h1>
+
+<form action="{{ path('nivel_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('nivel') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{%endblock%}

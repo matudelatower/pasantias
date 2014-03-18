@@ -63,11 +63,21 @@
     </head>
 
     <body>
-
+        <div class="center text-center">
+            <h2>Bienvenido a la Bolsa de Pasantías</h2>
+        </div>
         <div class="container">
 
             <form action="{{ path('login_check') }}" method="post" class="form-signin" role="form">
-                <h2 class="form-signin-heading">Bienvenido a la Bolsa de Pasantías</h2>
+
+
+                {% if error %}
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>  {{ error.message |trans}}</strong>
+                </div>
+
+                {% endif %}
                 <input class="form-control" placeholder="Usuario" required="" autofocus="" name="_username" value="{{ last_username }}">
                 <input class="form-control" placeholder="Password" required="" type="password" name="_password" >
                {# <label class="checkbox">
@@ -78,13 +88,10 @@
 
         </div> <!-- /container -->
 
-        <div class="pull-right">
-            <a class="btn btn-default btn-sm" href="{{ path('registrarse') }}">Registrarse</a>
-        </div>
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-
-
+        <script src="{{asset('bundles/theme/js/jquery-ui-1.10.3.custom/js/jquery-1.9.1.js')}}" type="text/javascript" ></script>        
+        <script src="{{asset('bundles/theme/js/bootstrap.min.js')}}" type="text/javascript" ></script>
     </body></html>

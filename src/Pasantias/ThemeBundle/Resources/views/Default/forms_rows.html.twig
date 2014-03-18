@@ -1,29 +1,37 @@
 {% form_theme signup _self %}
 {% block form_row %}
     {% spaceless %}
-        <div class="form-group{% if errors|length > 0 %} error{% endif %}">
+<div class="form-group{% if errors|length > 0 %} error{% endif %}">
             {{ form_label(form, '', { 'label_attr': {'class': 'col-lg-2 control-label'} }) }}
-            <div class="col-lg-10">
+    <div class="col-lg-10">
                 {{ form_widget(form) }}
                 {% if form.vars.help is defined %}
-                    <span class="help-block">{{ form.vars.help }}</span>
+        <span class="help-block">{{ form.vars.help }}</span>
                 {% endif %}
-            </div>
+    </div>
             {{ form_errors(form) }}
-        </div>
+</div>
     {% endspaceless %}
 {% endblock form_row %}
 {% block form_errors %}
     {% spaceless %}
         {% if errors|length > 0 %}
-            <div class="controls">
+<div class="alert alert-dismissable alert-danger">
+    <button type="button" class="close" data-dismiss="alert">×</button>
                 {% for error in errors %}
-                    <span class="help-block">{{ error.messagePluralization is null
+    <strong>{{ error.messagePluralization is null
                     ? error.messageTemplate|trans(error.messageParameters, 'validators')
-                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators') }}</span>
+                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators') }}
+    </strong>
                 {% endfor %}
-            </div>
-        {% endif %}
+</div>
+  {% endif %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+<div class="alert alert-dismissable alert-success">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>  {{ flashMessage }}</strong>
+</div>
+{% endfor %}
     {% endspaceless %}
 {% endblock form_errors %}
 
@@ -33,9 +41,33 @@
 {% if type == 'file'%}
 <input class="btn btn-success btn-sm" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {%else%}
-<input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+<input class="form-control {%if (form.vars.attr['class']) is defined%}
+{{(form.vars.attr['class'])}}
+{%endif%}" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {%endif%}
-
-
 {% endspaceless %}
 {% endblock form_widget_simple %}
+
+{% block choice_widget_collapsed %}
+{% spaceless %}
+    {% if required and empty_value is none and not empty_value_in_choices %}
+        {% set required = false %}
+    {% endif %}
+    <select class="form-control {%if (form.vars.attr['class']) is defined%}
+{{(form.vars.attr['class'])}}
+{%endif%}" {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if empty_value is not none %}
+            <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('choice_widget_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled">{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('choice_widget_options') }}
+    </select>
+{% endspaceless %}
+{% endblock choice_widget_collapsed %}

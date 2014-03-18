@@ -3,7 +3,8 @@
 namespace Pasantias\UsuariosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * Pasantias\UsuariosBundle\Entity\Usuarios
@@ -12,8 +13,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity
  * @ORM\Table(name="usuarios")
+ * @UniqueEntity(fields="usuario",message="El usuario ya existe.")
+ * @UniqueEntity(fields="mail", message="El mail ya existe.")
  */
-class Usuarios implements UserInterface {
+class Usuarios implements AdvancedUserInterface {
 
     /**
      * @ORM\Id
@@ -22,7 +25,7 @@ class Usuarios implements UserInterface {
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(type="string", length=100,unique=true) */
     protected $usuario;
 
     /** @ORM\Column(type="string", length=100) */
@@ -31,11 +34,11 @@ class Usuarios implements UserInterface {
     /** @ORM\Column(type="boolean") */
     protected $activo;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(type="string", length=100,unique=true) */
     protected $mail;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Pasantias\UsuariosBundle\Entity\Perfil",inversedBy="usuario")
+     * @ORM\ManyToOne(targetEntity="Perfil",inversedBy="usuario")
      * @ORM\JoinColumn(name="perfil_id",referencedColumnName="id")
      */
     protected $perfil;
@@ -79,14 +82,33 @@ class Usuarios implements UserInterface {
         
     }
     
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->activo;
+    }
+    
     public function __sleep() {
         return array('id', 'usuario', 'password');
     }
 
-    public function __construct() {
-        $this->activo = 'false';
+    public function __construct() {        
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
-        //$this->perfil= new \Doctrine\Common\Collections\ArrayCollection();
+        
     }
 
     /**
@@ -188,10 +210,10 @@ class Usuarios implements UserInterface {
     /**
      * Set perfil
      *
-     * @param \Pasantias\UsuariosBundle\Entity\Perfil $perfil
+     * @param Perfil $perfil
      * @return Usuarios
      */
-    public function setPerfil(\Pasantias\UsuariosBundle\Entity\Perfil $perfil = null) {
+    public function setPerfil(Perfil $perfil = null) {
         $this->perfil = $perfil;
 
         return $this;
@@ -200,7 +222,7 @@ class Usuarios implements UserInterface {
     /**
      * Get perfil
      *
-     * @return \Pasantias\UsuariosBundle\Entity\Perfil 
+     * @return Perfil 
      */
     public function getPerfil() {
         return $this->perfil;

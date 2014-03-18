@@ -1,0 +1,38 @@
+{%block curriculum_prototype_widget%}
+
+{% set domicilio_proto %}
+
+<td>{{ form_row(form.persona.domicilio.vars.prototype.calle) }}</td>
+<td>{{ form_row(form.persona.domicilio.vars.prototype.numero) }}</td>
+<td>{{ form_row(form.persona.domicilio.vars.prototype.depto) }}</td>
+<td>{{ form_row(form.persona.domicilio.vars.prototype.piso) }}</td>
+<td>{{ form_row(form.persona.domicilio.vars.prototype.provincia) }}</td>
+<td>{{ form_row(form.persona.domicilio.vars.prototype.localidad) }}</td>
+<td class="action"></td>
+
+{% endset %}
+{% set formacion_proto %}
+<td>{{ form_row(form.persona.formacionAcademica.vars.prototype.ingreso) }}</td>
+<td>{{ form_row(form.persona.formacionAcademica.vars.prototype.egreso) }}</td>
+<td>{{ form_row(form.persona.formacionAcademica.vars.prototype.estadoAvance) }}</td>
+<td>{{ form_row(form.persona.formacionAcademica.vars.prototype.carrera) }}</td>
+<td class="action"></td>
+{% endset %}
+{% set conocimientos_proto %}
+<td>{{ form_row(form.persona.conocimientos.vars.prototype.subArea) }}</td>
+<td>{{ form_row(form.persona.conocimientos.vars.prototype.campo) }}</td>
+<td>{{ form_row(form.persona.conocimientos.vars.prototype.nivel) }}</td>
+{% endset %}
+
+{% set antecedentes_proto %}
+
+<td>{{ form_row(form.persona.antecedente_laboral.vars.prototype.empresa) }}</td>
+<td>{{ form_row(form.persona.antecedente_laboral.vars.prototype.fechaDesde) }}</td>
+<td>{{ form_row(form.persona.antecedente_laboral.vars.prototype.fechaHasta) }}</td>
+<td>{{ form_row(form.persona.antecedente_laboral.vars.prototype.descripcion) }}</td>
+<td>{{ form_row(form.persona.antecedente_laboral.vars.prototype.nombreContacto) }}</td>
+<td>{{ form_row(form.persona.antecedente_laboral.vars.prototype.telContacto) }}</td>
+{% endset %}
+
+
+{%endblock%}

@@ -20,18 +20,70 @@
         <li><a href="#antecedentes-laborales" data-toggle="tab">Antecedentes Laborales</a></li>        
     </ul>    
 {#{{ form_widget(form) }}#}
+    {% set domicilio_proto %}
+
+
+
+    <td>{{ form_widget(form.persona.domicilio.vars.prototype.calle) }}</td>
+    <td>{{ form_widget(form.persona.domicilio.vars.prototype.numero) }}</td>
+    <td>{{ form_widget(form.persona.domicilio.vars.prototype.depto) }}</td>
+    <td>{{ form_widget(form.persona.domicilio.vars.prototype.piso) }}</td>
+    <td>{{ form_widget(form.persona.domicilio.vars.prototype.provincia) }}</td>
+    <td>{{ form_widget(form.persona.domicilio.vars.prototype.localidad) }}</td>
+    <td class="action"></td>
+
+
+{% endset %}
+{% set formacion_proto %}
+    <td>{{ form_widget(form.persona.formacionAcademica.vars.prototype.ingreso) }}</td>
+    <td>{{ form_widget(form.persona.formacionAcademica.vars.prototype.egreso) }}</td>
+    <td>{{ form_widget(form.persona.formacionAcademica.vars.prototype.estadoAvance) }}</td>
+    <td>{{ form_widget(form.persona.formacionAcademica.vars.prototype.carrera) }}</td>
+    <td class="action"></td>
+{% endset %}
+{% set conocimientos_proto %}
+    <td>{{ form_widget(form.persona.conocimientos.vars.prototype.descripcion) }}</td>
+    <td>{{ form_widget(form.persona.conocimientos.vars.prototype.area) }}</td>
+    <td>{{ form_widget(form.persona.conocimientos.vars.prototype.subArea) }}</td>
+    <td>{{ form_widget(form.persona.conocimientos.vars.prototype.campo) }}</td>
+    <td>{{ form_widget(form.persona.conocimientos.vars.prototype.nivel) }}</td>
+    <td class="action"></td>
+{% endset %}
+
+{% set antecedentes_proto %}
+
+    <td>{{ form_widget(form.persona.antecedente_laboral.vars.prototype.empresa) }}</td>
+    <td>{{ form_widget(form.persona.antecedente_laboral.vars.prototype.fechaDesde) }}</td>
+    <td>{{ form_widget(form.persona.antecedente_laboral.vars.prototype.fechaHasta) }}</td>
+    <td>{{ form_widget(form.persona.antecedente_laboral.vars.prototype.descripcion) }}</td>
+    <td>{{ form_widget(form.persona.antecedente_laboral.vars.prototype.nombreContacto) }}</td>
+    <td>{{ form_widget(form.persona.antecedente_laboral.vars.prototype.telContacto) }}</td>
+    <td class="action"></td>
+{% endset %}
     <div id="myTabContent" class="tab-content">
         <!-- Primera pestaña -->
         <div class="tab-pane fade active in" id="datos-personales">
 {{ form_errors(form) }}
             <fieldset>
+
                 <div class="col-lg-6">
                     <legend>Datos de la Persona</legend>
 
                     {{ form_row(form.persona.nombre) }}
                     {{ form_row(form.persona.apellido) }}
                     {{ form_row(form.persona.dni) }}
-                    {{ form_row(form.persona.cuit) }}
+                    <div class="form-group">
+                        {{ form_label(form.persona.cuit ,'CUIT', { 'label_attr': {'class': 'col-lg-2 control-label'} } ) }}
+                        <div class="col-lg-10">
+                            <div class="input-group">
+
+                    {{ form_widget(form.persona.cuit) }}
+                                <span class="input-group-btn">
+                                    <button id="calcular" class="btn btn-default" type="button">Calcular</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                     {{ form_row(form.persona.fechaNacimiento) }}
                     {{ form_row(form.persona.file) }}
 
@@ -42,15 +94,37 @@
                 </div>
             </fieldset>
             <fieldset>
-                <div class="col-lg-6">
-                    <legend>Domicilio</legend>
+                <div class="col-lg-15">
+                    <legend>Domicilio</legend>                    
 
-                    <ul class="domicilio" data-prototype="{{ form_widget(form.persona.domicilio.vars.prototype)|e }}">
+                    <table class="domicilio table" data-prototype="{{ domicilio_proto |e }}">
         {# itera sobre cada etiqueta existente y reproduce su único campo: name #}
-        {% for domicilios in form.persona.domicilio %}                           
-                    {{ form_widget(domicilios) }}
+                        <tbody>
+                            <tr>
+                                <td><label>Calle </label></td>
+                                <td><label>Numero </label></td>
+                                <td><label>Depto </label></td>
+                                <td><label>Piso </label></td>
+                                <td><label>Provincia </label></td>
+                                <td><label>Localidad </label></td>
+                                <td><label>Accion</label></td>
+                            </tr>
+        {% for domicilios in form.persona.domicilio %}      
+
+                            <tr>
+{#                            {{ form_widget(domicilios) }}#}
+
+                                <td>{{ form_widget(domicilios.calle) }}</td>
+                                <td>{{ form_widget(domicilios.numero) }}</td>
+                                <td>{{ form_widget(domicilios.depto) }}</td>
+                                <td>{{ form_widget(domicilios.piso) }}</td>
+                                <td>{{ form_widget(domicilios.provincia) }}</td>
+                                <td>{{ form_widget(domicilios.localidad) }}</td>
+                                <td class="action"></td>
+                            </tr>
         {% endfor %}
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </fieldset>
 
@@ -59,61 +133,102 @@
 
         <div class="tab-pane fade" id="formacion-academica">
             <fieldset>
-                <div class="col-lg-6">
+                <div class="col-lg-15">
                     <legend>Datos Academicos</legend>
 
-                    <ul class="datos_academicos" data-prototype="{{ form_widget(form.persona.formacionAcademica.vars.prototype)|e }}">
+                    <table class="datos_academicos table" data-prototype="{{ formacion_proto|e }}">
+                        <tbody>
+
+                            <tr>
+                                <td><label>Ingreso </label></td>
+                                <td><label>Egreso </label></td>
+                                <td><label>Estado Avance </label></td>
+                                <td><label>Carrera </label></td>                            
+                                <td>Accion</td>
+                            </tr>
+
         {# itera sobre cada etiqueta existente y reproduce su único campo: name #}
         {% for formacionAcademicas in form.persona.formacionAcademica %}
-                                    {#<li>{{ form_row(formacionAcademicas.ingreso) }}</li>
-                                    <li>{{ form_row(formacionAcademicas.egreso) }}</li>
-                                    <li>{{ form_row(formacionAcademicas.estadoavance) }}</li>
-                                    <li>{{ form_row(formacionAcademicas.carrera) }}</li>#}
-                        {{ form_widget(formacionAcademicas) }}
+                        <td>{{ form_widget(formacionAcademicas.ingreso) }}</td>
+                        <td>{{ form_widget(formacionAcademicas.egreso) }}</td>
+                        <td>{{ form_widget(formacionAcademicas.estadoAvance) }}</td>
+                        <td>{{ form_widget(formacionAcademicas.carrera) }}</td>
+                        <td class="action"></td>
+{#                        {{ form_widget(formacionAcademicas) }}#}
 
 
         {% endfor %}
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </fieldset>
         </div>
 
         <div class="tab-pane fade" id="conocimientos">
             <fieldset>
-                <div class="col-lg-6">
+                <div class="col-lg-15">
                     <legend>Conocimientos</legend>
-                    <ul class="conocimientos" data-prototype="{{ form_widget(form.persona.conocimientos.vars.prototype)|e }}">
+                    <table class="conocimientos table" data-prototype="{{ conocimientos_proto|e }}">
+                        <tbody>
+
+                            <tr>
+                                <td><label>Descripcion</label></td>
+                                <td><label>Area</label></td>
+                                <td><label>Subarea</label></td>
+                                <td><label>Campo</label></td>
+                                <td><label>Nivel</label></td>
+                                <td>Accion</td>
+                            </tr>
+
                     {# itera sobre cada etiqueta existente y reproduce su único campo: name #}
                     {% for conocimiento in form.persona.conocimientos %}
-                                        {#<li>{{ form_row(conocimiento.subarea) }}</li>
-                                        <li>{{ form_row(conocimiento.campo) }}</li>
-                                        <li>{{ form_row(conocimiento.nivel) }}</li>#}
-                        <li>{{ form_widget(conocimiento) }}</li>
+                        <td>{{ form_widget(conocimiento.descripcion) }}</td>
+                        <td>{{ form_widget(conocimiento.area) }}</td>
+                        <td>{{ form_widget(conocimiento.subArea) }}</td>
+                        <td>{{ form_widget(conocimiento.campo) }}</td>
+                        <td>{{ form_widget(conocimiento.nivel) }}</td>
+                        <td class="action"></td>
+{#                        <li>{{ form_widget(conocimiento) }}</li>#}
 
                     {% endfor %}
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </fieldset>
         </div>
 
         <div class="tab-pane fade" id="antecedentes-laborales">
             <fieldset>
-                <div class="col-lg-6">
+                <div class="col-lg-15">
                     <legend>Antecedentes laborales</legend>
 
-                    <ul class="antecedentes_laborales" data-prototype="{{ form_widget(form.persona.antecedente_laboral.vars.prototype)|e }}">
+                    <table class="antecedentes_laborales table" data-prototype="{{ antecedentes_proto|e }}">
+                        <tbody>
+
+                            <tr>
+                                <td><label>Empresa</label></td>
+                                <td><label>Desde </label></td>
+                                <td><label>Hasta</label></td>
+                                <td><label>Descripcion</label></td>
+                                <td><label>Contacto </label></td>
+                                <td><label>Tel. Contacto</label></td>
+                                <td>Accion</td>
+                            </tr>
+
         {# itera sobre cada etiqueta existente y reproduce su único campo: name #}
         {% for antecedentes_laborales in form.persona.antecedente_laboral %}
-                                            {#<li>{{ form_row(antecedente_laboral.empresa) }}</li>
-                                            <li>{{ form_row(conocimiento.fechadesde) }}</li>
-                                            <li>{{ form_row(conocimiento.fechahasta) }}</li>
-                                            <li>{{ form_row(conocimiento.descripcion) }}</li>
-                                            <li>{{ form_row(conocimiento.nombrecontacto) }}</li>
-                                            <li>{{ form_row(conocimiento.telcontacto) }}</li>#}
-                {{ form_widget(antecedentes_laborales) }}
+                        <td>{{ form_widget(antecedentes_laborales.empresa) }}</td>
+                        <td>{{ form_widget(antecedentes_laborales.fechaDesde) }}</td>
+                        <td>{{ form_widget(antecedentes_laborales.fechaHasta) }}</td>
+                        <td>{{ form_widget(antecedentes_laborales.descripcion) }}</td>
+                        <td>{{ form_widget(antecedentes_laborales.nombreContacto) }}</td>
+                        <td>{{ form_widget(antecedentes_laborales.telContacto) }}</td>
+                        <td class="action"></td>
+{#                {{ form_widget(antecedentes_laborales) }}#}
 
         {% endfor %}
-                    </ul>
+                        </tbody>
+                    </table>
                 </div>
             </fieldset>
         </div>
@@ -122,16 +237,15 @@
     <script type="text/javascript" src="{{asset('bundles/theme/js/jQuery.min.js')}}"></script>
     {% include 'CurriculumBundle:Curriculum:curriculum_jquery_block.html.twig' %}
 
+    <div class="">
 
+        <button class="btn btn-primary" type="submit">Guardar</button>
+
+        <a class="btn btn-default" href="{{ path('curriculum_homepage') }}">
+            Volver
+        </a>
+    </div>
 </form>
 
-<div class="">
-
-    <button class="btn btn-primary" type="submit">Guardar</button>
-
-    <a class="btn btn-default" href="{{ path('curriculum_homepage') }}">
-        Volver
-    </a>
-</div>
 
 {%endblock%}

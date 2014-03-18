@@ -20,7 +20,11 @@ class AntecedenteLaboralType extends AbstractType {
                 ->add('fechaHasta', 'text', array(
                     'attr' => array('class' => 'date')
                 ))
-                ->add('descripcion')
+                ->add('descripcion', 'textarea', array(
+                    'label_attr' => array('for' => 'textArea'),
+                    'attr' => array("class" => "form-control",
+                        "rows" => "3"),
+                ))
                 ->add('nombreContacto', 'text', array(
                     'label' => 'Nombre Contacto',
                     'required' => false,

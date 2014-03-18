@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Description of Persona
@@ -20,6 +21,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\Table(name="personas")
  * @ORM\HasLifecycleCallbacks
+ * @UniqueEntity(fields="dni",message="Ya existe un curriculum con este DNI.")
  */
 class Persona {
 
@@ -39,7 +41,7 @@ class Persona {
     /** @ORM\Column(type="string", length=1) */
     private $sexo;
 
-    /** @ORM\Column(type="string", length=10) */
+    /** @ORM\Column(type="string", length=10, unique=true) */
     private $dni;
 
     /** @ORM\Column(type="string", length=13) */

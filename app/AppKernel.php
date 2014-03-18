@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Pasantias\CurriculumBundle\CurriculumBundle(),
             new Pasantias\PasantiasBundle\PasantiasBundle(),            
             new Pasantias\ThemeBundle\ThemeBundle(),
+            new Pasantias\UtilBundle\UtilBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

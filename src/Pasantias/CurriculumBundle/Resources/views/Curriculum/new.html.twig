@@ -14,7 +14,7 @@
 
 <h1>Carga de Curriculum</h1>
 
-<form action="{{ path('curriculum_create') }}" method="post" {{ form_enctype(form) }}>
+<form class="form-horizontal" action="{{ path('curriculum_create') }}" method="post" {{ form_enctype(form) }}>
     <ul class="nav nav-tabs" style="margin-bottom: 15px;">
         <li class="active"><a href="#datos-personales" data-toggle="tab">Datos Personales</a></li>
         <li><a href="#formacion-academica" data-toggle="tab">Formación Académica</a></li>
@@ -32,14 +32,27 @@
 
                     {{ form_row(form.persona.nombre) }}
                     {{ form_row(form.persona.apellido) }}
+                    {{ form_row(form.persona.sexo) }}
                     {{ form_row(form.persona.dni) }}
-                    {{ form_row(form.persona.cuit) }}
+
+                    <div class="form-group">
+                        {{ form_label(form.persona.cuit ,'CUIT', { 'label_attr': {'class': 'col-lg-2 control-label'} } ) }}
+                        <div class="col-lg-10">
+                        <div class="input-group">
+
+                    {{ form_widget(form.persona.cuit) }}
+                            <span class="input-group-btn">
+                                <button id="calcular" class="btn btn-default" type="button">Calcular</button>
+                            </span>
+                        </div>
+                    </div>
+                        </div>
                     {{ form_row(form.persona.fechaNacimiento) }}
                     {{ form_row(form.persona.file) }}
 
                 </div>
                 <div class="col-lg-4 col-lg-offset-1">
-                    
+
                 </div>
             </fieldset>
             <fieldset>
@@ -123,15 +136,15 @@
     <script type="text/javascript" src="{{asset('bundles/theme/js/jQuery.min.js')}}"></script>
     {% include 'CurriculumBundle:Curriculum:curriculum_jquery_block.html.twig' %}
 
+    <div class="">
 
+        <button class="btn btn-primary" type="submit">Guardar</button>
+
+        <a class="btn btn-default" href="{{ path('curriculum_homepage') }}">
+            Volver
+        </a>
+    </div>
 
 </form>
-<div class="">
 
-    <button class="btn btn-primary" type="submit">Guardar</button>
-
-    <a class="btn btn-default" href="{{ path('curriculum_homepage') }}">
-        Volver
-    </a>
-</div>
 {%endblock%}

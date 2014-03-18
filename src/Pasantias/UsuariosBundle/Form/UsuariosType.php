@@ -12,18 +12,20 @@ class UsuariosType extends AbstractType
     {
         $builder
             ->add('usuario')
-//            ->add('password')
-//            ->add('activo')
+            ->add('password','hidden')
+            ->add('activo','checkbox',array(
+                'required'=>false,
+            ))
 //            ->add('mail')
 //            ->add('salt')
 //            ->add('perfil')
-                ->add('password', 'repeated', array(
-                    'type' => 'password',
-                    'first_name' => 'Contrasena',
-                    'second_name' => 'Repetir_Contrasena',
-                    'invalid_message' => 'Las dos contraseñas deben coincidir',
-                    
-                ))
+//                ->add('password', 'repeated', array(
+//                    'type' => 'password',
+//                    'first_name' => 'Contrasena',
+//                    'second_name' => 'Repetir_Contrasena',
+//                    'invalid_message' => 'Las dos contraseñas deben coincidir',
+//                    
+//                ))
                 ->add('mail','email')
                 ->add('perfil', 'entity', array(
                     'required' => true,

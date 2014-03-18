@@ -38,6 +38,10 @@ class Perfil implements RoleInterface {
     public function getRole() {
         return $this->roleName;
     }
+    
+    public function __toString() {
+        $this->nombrePerfil;
+    }
 
     /**
      * Get id

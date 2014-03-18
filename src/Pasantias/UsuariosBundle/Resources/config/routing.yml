@@ -35,7 +35,7 @@ usuarios_edit:
 usuarios_update:
     pattern:  /usuarios/{id}/update
     defaults: { _controller: "UsuariosBundle:Usuarios:update" }
-    requirements: { _method: put }
+    requirements: { _method: post }
 
 usuarios_delete:
     pattern:  /usuarios/{id}/delete

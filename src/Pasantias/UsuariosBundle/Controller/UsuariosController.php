@@ -4,8 +4,8 @@ namespace Pasantias\UsuariosBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Pasantias\PasantiasBundle\Entity\Usuarios;
-use Pasantias\PasantiasBundle\Form\UsuariosType;
+use Pasantias\UsuariosBundle\Entity\Usuarios;
+use Pasantias\UsuariosBundle\Form\UsuariosType;
 
 /**
  * Usuarios controller.
@@ -20,9 +20,14 @@ class UsuariosController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PasantiasBundle:Usuarios')->findAll();
+        $usuarios = $em->getRepository('UsuariosBundle:Usuarios')->findAll();
 
-        return $this->render('PasantiasBundle:Usuarios:index.html.twig', array(
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+                $usuarios, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
+
+        return $this->render('UsuariosBundle:Usuarios:index.html.twig', array(
                     'entities' => $entities,
         ));
     }
@@ -34,17 +39,18 @@ class UsuariosController extends Controller {
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PasantiasBundle:Usuarios')->find($id);
+        $entity = $em->getRepository('UsuariosBundle:Usuarios')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Usuarios entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+//        $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('PasantiasBundle:Usuarios:show.html.twig', array(
+        return $this->render('UsuariosBundle:Usuarios:show.html.twig', array(
                     'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),));
+//                    'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
@@ -55,7 +61,7 @@ class UsuariosController extends Controller {
         $entity = new Usuarios();
         $form = $this->createForm(new UsuariosType(), $entity);
 
-        return $this->render('PasantiasBundle:Usuarios:new.html.twig', array(
+        return $this->render('UsuariosBundle:Usuarios:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
@@ -72,13 +78,23 @@ class UsuariosController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $factory = $this->get('security.encoder_factory');
+
+            $encoder = $factory->getEncoder($entity);
+            $password = $encoder->encodePassword('123456', $entity->getSalt());
+            $entity->setPassword($password);
+            $entity->setActivo(TRUE);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('pasantias_usuarios_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Usuario creado Correctamente'
+            );
+
+            return $this->redirect($this->generateUrl('usuarios_edit', array('id' => $entity->getId())));
         }
 
-        return $this->render('PasantiasBundle:Usuarios:new.html.twig', array(
+        return $this->render('UsuariosBundle:Usuarios:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
@@ -91,19 +107,19 @@ class UsuariosController extends Controller {
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PasantiasBundle:Usuarios')->find($id);
+        $entity = $em->getRepository('UsuariosBundle:Usuarios')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Usuarios entity.');
         }
 
         $editForm = $this->createForm(new UsuariosType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+//        $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('PasantiasBundle:Usuarios:edit.html.twig', array(
+        return $this->render('UsuariosBundle:Usuarios:edit.html.twig', array(
                     'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
+                    'form' => $editForm->createView(),
+//                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -114,13 +130,13 @@ class UsuariosController extends Controller {
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PasantiasBundle:Usuarios')->find($id);
+        $entity = $em->getRepository('UsuariosBundle:Usuarios')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Usuarios entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+//        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new UsuariosType(), $entity);
         $editForm->bind($request);
 
@@ -128,13 +144,16 @@ class UsuariosController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('pasantias_usuarios_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Cambios guardados Correctamente'
+            );
+            return $this->redirect($this->generateUrl('usuarios_edit', array('id' => $id)));
         }
 
-        return $this->render('PasantiasBundle:Usuarios:edit.html.twig', array(
+        return $this->render('UsuariosBundle:Usuarios:edit.html.twig', array(
                     'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
+                    'form' => $editForm->createView(),
+//                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -148,7 +167,7 @@ class UsuariosController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('PasantiasBundle:Usuarios')->find($id);
+            $entity = $em->getRepository('UsuariosBundle:Usuarios')->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Usuarios entity.');

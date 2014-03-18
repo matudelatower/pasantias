@@ -1,19 +1,11 @@
 {
-    "autoload": {
-        "psr-0":         {
-            "": "src/"
-        }
-    },
-    "config": {
-        "bin-dir": "bin"
-    },
-    "description": "The \"Symfony Standard Edition\" distribution",
-    "extra": {
-        "symfony-app-dir": "app",
-        "symfony-web-dir": "web"
-    },
-    "minimum-stability": "dev",
     "name": "symfony/framework-standard-edition",
+    "license": "MIT",
+    "type": "project",
+    "description": "The \"Symfony Standard Edition\" distribution",
+    "autoload": {
+        "psr-0": {"": "src/"}
+    },
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.3.*",
@@ -30,20 +22,20 @@
         "knplabs/knp-snappy-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "knplabs/knp-menu-bundle":"dev-master"
+        "knplabs/knp-menu-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
-"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
-    ],
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
         "post-update-cmd": [
-"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
-    ]
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ]
     }
 }

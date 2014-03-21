@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block contenido %}
-<h1>Empresas list</h1>
+<h1>Listado de Empresas</h1>
 
 <table class="table table-striped table-hover ">
     <thead>
@@ -15,7 +15,7 @@
             <th>Tel</th>
             <th>Mail</th>
             {#<th>Paginaweb</th>#}
-            <th>Actions</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -29,64 +29,25 @@
             <td>{{ entity.mailContacto }}</td>
                 {#<td>{{ entity.paginaWeb }}</td>#}
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('empresas_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('empresas_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <a class="btn btn-default" href="{{ path('empresas_edit', { 'id': entity.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>   
+                
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+<div class="navigation text-center">
+    {{ knp_pagination_render(entities) }}
+</div>
 
+<div class="pull-right">
+<a class="btn btn-primary" href="{{ path('empresas_new') }}">
+    Crear Nuevo
+</a>
+</div>
 
-
-{#<table>
-    <tr>
-        <th>{{ knp_pagination_sortable(pagination,'Id', 'empresas.id') }}</th>
-        <th{% if pagination.isSorted('empresas.nombreEmpresa') %} class="sorted"{% endif %}>
-            {{ knp_pagination_sortable(pagination,'Titulo', 'empresas.nombre') }}
-            </th>
-        </tr>
-
-    {% for entity in pagination %}
-        <tr>
-            <td>{{ entity.id }}</td>
-            <td>{{ entity.nombreEmpresa }}</td>
-            <td>{{ entity.personaContacto }}</td>
-            <td>{{ entity.telContacto }}</td>
-            <td>{{ entity.mailContacto }}</td>
-            <td>{{ entity.paginaWeb }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('empresas_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('empresas_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </table>
-
-    <div class="navigation">
-    {{ knp_pagination_render(pagination) }}
-        </div>#}
-<br>
-
-<ul>
-    <li>
-        <a href="{{ path('empresas_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
 
 
 {%endblock%}

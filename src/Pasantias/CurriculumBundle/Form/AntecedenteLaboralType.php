@@ -17,7 +17,7 @@ class AntecedenteLaboralType extends AbstractType {
                     'format' => 'dd-MM-yyyy',
                     'attr' => array('class' => 'date')
                 ))
-                ->add('fechaHasta', 'text', array(
+                ->add('hasta', 'text', array(
                     'attr' => array('class' => 'date')
                 ))
                 ->add('descripcion', 'textarea', array(

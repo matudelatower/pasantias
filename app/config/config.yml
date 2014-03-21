@@ -73,3 +73,13 @@ knp_paginator:
         pagination: ThemeBundle:Default:pagination_sliding.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
         
+knp_snappy:
+    pdf:
+        enabled:    true
+#        binary:     /usr/local/bin/wkhtmltopdf
+        binary: /usr/bin/wkhtmltopdf
+        options:    []
+    image:
+        enabled:    true
+        binary:     /usr/local/bin/wkhtmltoimage
+        options:    []

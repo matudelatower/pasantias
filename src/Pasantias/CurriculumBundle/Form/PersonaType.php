@@ -2,15 +2,16 @@
 
 namespace Pasantias\CurriculumBundle\Form;
 
+use Pasantias\CurriculumBundle\Entity\Conocimientos;
+use Pasantias\CurriculumBundle\Entity\Domicilio;
+use Pasantias\CurriculumBundle\Entity\FormacionAcademica;
+use Pasantias\CurriculumBundle\Entity\FormacionAcademicaSecundaria;
+use Pasantias\CurriculumBundle\Form\ConocimientosType;
+use Pasantias\CurriculumBundle\Form\DomicilioType;
+use Pasantias\CurriculumBundle\Form\FormacionAcademicaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pasantias\CurriculumBundle\Form\FormacionAcademicaType;
-use Pasantias\CurriculumBundle\Form\ConocimientosType;
-use Pasantias\CurriculumBundle\Form\DomicilioType;
-use Pasantias\CurriculumBundle\Entity\Conocimientos;
-use Pasantias\CurriculumBundle\Entity\FormacionAcademica;
-use Pasantias\CurriculumBundle\Entity\Domicilio;
 
 class PersonaType extends AbstractType {
 
@@ -38,6 +39,7 @@ class PersonaType extends AbstractType {
                     'attr'=>array('class'=>'btn btn-primary btn-sm')
                     ))
                 ->add('path')
+                ->add('telefono')
                 ->add('domicilio', 'collection', array(
                     'type' => new DomicilioType(),
                     'label' => 'Direcciones',
@@ -47,6 +49,16 @@ class PersonaType extends AbstractType {
                     'allow_add' => true,
                     'attr' => array(
                         'class' => 'row addresses'
+            )))
+                ->add('formacionAcademicaSecundaria', 'collection', array(
+                    'type' => new FormacionAcademicaSecundariaType(),
+                    'label' => 'Formacion Academica',
+                    'by_reference' => false,
+                    'prototype_data' => new FormacionAcademicaSecundaria(),
+                    'allow_delete' => true,
+                    'allow_add' => true,
+                    'attr' => array(
+                        'class' => 'row formacionAcademicaSecundaria'
             )))
                 ->add('formacionAcademica', 'collection', array(
                     'type' => new FormacionAcademicaType(),

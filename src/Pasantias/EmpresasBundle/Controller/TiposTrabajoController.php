@@ -27,7 +27,11 @@ class TiposTrabajoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('EmpresasBundle:TiposTrabajo')->findAll();
+        $tiposTrabajo = $em->getRepository('EmpresasBundle:TiposTrabajo')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+                $tiposTrabajo, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
 
         return array(
             'entities' => $entities,
@@ -50,11 +54,11 @@ class TiposTrabajoController extends Controller
             throw $this->createNotFoundException('Unable to find TiposTrabajo entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            
         );
     }
 
@@ -93,7 +97,7 @@ class TiposTrabajoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('tipo_trabajo_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('tipo_trabajo'));
         }
 
         return array(
@@ -119,12 +123,12 @@ class TiposTrabajoController extends Controller
         }
 
         $editForm = $this->createForm(new TiposTrabajoType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView(),
+            
         );
     }
 
@@ -145,7 +149,7 @@ class TiposTrabajoController extends Controller
             throw $this->createNotFoundException('Unable to find TiposTrabajo entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        
         $editForm = $this->createForm(new TiposTrabajoType(), $entity);
         $editForm->bind($request);
 
@@ -158,8 +162,8 @@ class TiposTrabajoController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView(),
+            
         );
     }
 

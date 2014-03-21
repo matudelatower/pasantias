@@ -15,19 +15,23 @@ use Pasantias\CurriculumBundle\Form\AreaType;
  *
  * @Route("/area")
  */
-class AreaController extends Controller
-{
+class AreaController extends Controller {
+
     /**
      * Lists all Area entities.
      *
      * @Route("/", name="area")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CurriculumBundle:Area')->findAll();
+        $area = $em->getRepository('CurriculumBundle:Area')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+                $area, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
+
 
         return array(
             'entities' => $entities,
@@ -40,8 +44,7 @@ class AreaController extends Controller
      * @Route("/{id}/show", name="area_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Area')->find($id);
@@ -53,7 +56,7 @@ class AreaController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -64,14 +67,13 @@ class AreaController extends Controller
      * @Route("/new", name="area_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Area();
-        $form   = $this->createForm(new AreaType(), $entity);
+        $form = $this->createForm(new AreaType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -82,9 +84,8 @@ class AreaController extends Controller
      * @Method("POST")
      * @Template("CurriculumBundle:Area:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new Area();
+    public function createAction(Request $request) {
+        $entity = new Area();
         $form = $this->createForm(new AreaType(), $entity);
         $form->bind($request);
 
@@ -98,7 +99,7 @@ class AreaController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +109,7 @@ class AreaController extends Controller
      * @Route("/{id}/edit", name="area_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Area')->find($id);
@@ -119,12 +119,11 @@ class AreaController extends Controller
         }
 
         $editForm = $this->createForm(new AreaType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -135,8 +134,7 @@ class AreaController extends Controller
      * @Method("POST")
      * @Template("CurriculumBundle:Area:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Area')->find($id);
@@ -145,7 +143,7 @@ class AreaController extends Controller
             throw $this->createNotFoundException('Unable to find Area entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+
         $editForm = $this->createForm(new AreaType(), $entity);
         $editForm->bind($request);
 
@@ -157,9 +155,8 @@ class AreaController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -169,8 +166,7 @@ class AreaController extends Controller
      * @Route("/{id}/delete", name="area_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +185,11 @@ class AreaController extends Controller
         return $this->redirect($this->generateUrl('area'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

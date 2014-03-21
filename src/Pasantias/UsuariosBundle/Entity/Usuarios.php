@@ -59,6 +59,12 @@ class Usuarios implements AdvancedUserInterface {
      * @ORM\JoinColumn(name="persona_id", referencedColumnName="id")
      */
     protected $persona;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Pasantias\CurriculumBundle\Entity\Profesor",inversedBy="usuario")
+     * @ORM\JoinColumn(name="profesor_id", referencedColumnName="id")
+     */
+    protected $profesor;
 
 
     public function getRoles() {

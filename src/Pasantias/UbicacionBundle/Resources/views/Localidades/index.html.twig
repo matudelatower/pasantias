@@ -1,41 +1,39 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
-<h1>Localidades list</h1>
+<h1>Listado Localidades</h1>
 
 <table class="table table-striped table-hover ">
     <thead>
         <tr>
             <th>Id</th>
-            <th>Nomblocalidad</th>
+            <th>Nombre</th>
+            <th>Provincia</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('pasantias_localidades_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.id }}</td>
             <td>{{ entity.nombreLocalidad }}</td>
+            <td>{{ entity.provincia }}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('pasantias_localidades_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('pasantias_localidades_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <a class="btn btn-default" href="{{ path('pasantias_localidades_edit', { 'id': entity.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>                                
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
 
-<div class="navigation">
+<div class="navigation text-center">
     {{ knp_pagination_render(entities) }}
 </div>
 
+<div class="pull-right">
 <a class="btn btn-primary" href="{{ path('pasantias_localidades_new') }}">
     Crear Nuevo
 </a>
-
+</div>
 {%endblock%}

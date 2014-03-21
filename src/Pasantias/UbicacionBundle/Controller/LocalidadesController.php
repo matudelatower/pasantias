@@ -107,7 +107,7 @@ class LocalidadesController extends Controller {
 
         return $this->render('UbicacionBundle:Localidades:edit.html.twig', array(
                     'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
+                    'form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -138,7 +138,7 @@ class LocalidadesController extends Controller {
 
         return $this->render('UbicacionBundle:Localidades:edit.html.twig', array(
                     'entity' => $entity,
-                    'edit_form' => $editForm->createView(),
+                    'form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
     }

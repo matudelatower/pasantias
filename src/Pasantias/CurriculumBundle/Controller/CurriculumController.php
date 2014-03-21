@@ -2,17 +2,19 @@
 
 namespace Pasantias\CurriculumBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use DateTime;
+use Pasantias\CurriculumBundle\Entity\Curriculum;
+use Pasantias\CurriculumBundle\Entity\FormacionAcademica;
+use Pasantias\CurriculumBundle\Entity\Persona;
+use Pasantias\CurriculumBundle\Form\CurriculumPersonasType;
+use Pasantias\CurriculumBundle\Form\CurriculumType;
+use Pasantias\CurriculumBundle\Form\PersonaType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pasantias\CurriculumBundle\Entity\Curriculum;
-use Pasantias\CurriculumBundle\Form\CurriculumType;
-use Pasantias\CurriculumBundle\Entity\Persona;
-use Pasantias\CurriculumBundle\Form\PersonaType;
-use Pasantias\CurriculumBundle\Entity\FormacionAcademica;
-use Pasantias\CurriculumBundle\Form\CurriculumPersonasType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Curriculum controller.
@@ -39,7 +41,11 @@ class CurriculumController extends Controller {
                 return $this->redirect($this->generateUrl('curriculum_new'));
             }
         } else {
-            $entities = $em->getRepository('CurriculumBundle:Curriculum')->findAll();
+            $curriculums = $em->getRepository('CurriculumBundle:Curriculum')->findAll();
+            $paginator = $this->get('knp_paginator');
+            $entities = $paginator->paginate(
+                    $curriculums, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+            );
         }
 
 
@@ -110,11 +116,11 @@ class CurriculumController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-            
-            $entity->setFecha(new \DateTime('now'));
+
+            $entity->setFecha(new DateTime('now'));
             $persona = $entity->getPersona();
-            
-            $usuario=$this->get('security.context')->getToken()->getUser();
+
+            $usuario = $this->get('security.context')->getToken()->getUser();
 
             $usuario->setPersona($persona);
 
@@ -123,6 +129,9 @@ class CurriculumController extends Controller {
             }
             foreach ($entity->getPersona()->getFormacionAcademica() as $formacionAcademicas) {
                 $formacionAcademicas->setPersonas($persona);
+            }
+            foreach ($entity->getPersona()->getFormacionAcademicaSecundaria() as $formacionAcademicaSecundarias) {
+                $formacionAcademicaSecundarias->setPersonas($persona);
             }
             foreach ($entity->getPersona()->getConocimientos() as $conocimientos) {
                 $conocimientos->setPersonas($persona);
@@ -171,6 +180,9 @@ class CurriculumController extends Controller {
         }
         foreach ($entity->getPersona()->getFormacionAcademica() as $formacionAcademica) {
             $formacionAcademicaOriginal[] = $formacionAcademica;
+        }
+        foreach ($entity->getPersona()->getFormacionAcademicaSecundaria() as $formacionAcademicaSecundaria) {
+            $formacionAcademicaSecundariaOriginal[] = $formacionAcademicaSecundaria;
         }
         foreach ($entity->getPersona()->getConocimientos() as $conocimientos) {
             $conocimientosOriginal[] = $conocimientos;
@@ -233,6 +245,31 @@ class CurriculumController extends Controller {
                 foreach ($entity->getPersona()->getFormacionAcademica() as $formacionAcademica) {
                     $formacionAcademica->setPersonas($entity->getPersona());
                 }
+
+                //Formacion academica Secundaria
+                foreach ($entity->getPersona()->getFormacionAcademicaSecundaria() as $formacionAcademicaSecundaria) {
+
+                    foreach ($formacionAcademicaSecundariaOriginal as $key => $toDel) {
+                        if ($toDel->getId() === $formacionAcademicaSecundaria->getId()) {
+                            unset($formacionAcademicaSecundariaOriginal[$key]);
+                        }
+                    }
+                }
+
+                foreach ($formacionAcademicaSecundariaOriginal as $formacionAcademicaSecundaria) {
+                    // remove the formacion academica from the User
+
+
+                    $entity->getPersona()->removeFormacionAcademicaSecundaria($formacionAcademicaSecundaria);
+
+                    // if you wanted to delete the academica entirely, you can also do that
+                    $em->remove($formacionAcademicaSecundaria);
+                }
+
+                foreach ($entity->getPersona()->getFormacionAcademicaSecundaria() as $formacionAcademicaSecundaria) {
+                    $formacionAcademicaSecundaria->setPersonas($entity->getPersona());
+                }
+
 
                 //Conocimientos
                 foreach ($entity->getPersona()->getConocimientos() as $conocimiento) {
@@ -393,6 +430,30 @@ class CurriculumController extends Controller {
 
         return array(
             'subAreas' => $subArea
+        );
+    }
+
+    public function imprimirAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $curriculum = $em->getRepository('CurriculumBundle:Curriculum')->findOneById($id);
+
+
+
+        $html = $this->renderView('CurriculumBundle:Curriculum:curriculum.pdf.twig', array(
+            "curriculum" => $curriculum
+        ));
+//        return new Response($html);
+
+        return new Response(
+                $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array('margin-left' => '1cm',
+                    'margin-right' => '1cm',
+                    'margin-top' => '1cm',
+                    'margin-bottom' => '1cm',
+                )), 200, array(
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="Curriculum de ' . $curriculum->getPersona()->getNombre() .
+            ' ' . $curriculum->getPersona()->getApellido() . '.pdf"'
+                )
         );
     }
 

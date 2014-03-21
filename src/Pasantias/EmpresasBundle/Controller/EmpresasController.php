@@ -31,7 +31,6 @@ class EmpresasController extends Controller {
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('EmpresasBundle:Empresas')->findAll();
 
         if ($this->get('security.context')->isGranted('ROLE_EMPRESA')) {
             $usuarioEmpresa = $this->get('security.context')->getToken()->getUser();
@@ -42,6 +41,12 @@ class EmpresasController extends Controller {
                 return $this->redirect($this->generateUrl('empresas_new'));
             }
         } else {
+            $empresas = $em->getRepository('EmpresasBundle:Empresas')->findAll();
+
+            $paginator = $this->get('knp_paginator');
+            $entities = $paginator->paginate(
+                    $empresas, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+            );
             return array(
                 'entities' => $entities,
             );
@@ -80,6 +85,7 @@ class EmpresasController extends Controller {
      * @Template()
      */
     public function newAction() {
+
         $entity = new Empresas();
         $form = $this->createForm(new DomicilioEmpresasType(), $entity);
 
@@ -87,6 +93,7 @@ class EmpresasController extends Controller {
             'entity' => $entity,
             'form' => $form->createView(),
         );
+
 
 //         $empresa = new Empresas();
 //
@@ -203,7 +210,7 @@ class EmpresasController extends Controller {
 //
 //        return array(
 //            'entity' => $entity,
-//            'edit_form' => $editForm->createView(),
+//            'form' => $editForm->createView(),
 //            'delete_form' => $deleteForm->createView(),
 //        );
 
@@ -261,7 +268,7 @@ class EmpresasController extends Controller {
         }
         return array(
             'entity' => $entity,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -321,7 +328,7 @@ class EmpresasController extends Controller {
 
         return array(
             'entity' => $entity,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }

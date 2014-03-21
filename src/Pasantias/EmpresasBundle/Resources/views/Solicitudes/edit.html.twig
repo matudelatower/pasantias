@@ -1,25 +1,31 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
-<h1>Solicitudes edit</h1>
+<h1>Modificar Solicitud</h1>
+<div class="well bs-component col-lg-10">
+    <form class="form-horizontal" action="{{ path('solicitud_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
 
-<form action="{{ path('solicitud_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+        <fieldset>    
+            {{form_row(form.fechaDesde)}}
+            {{form_row(form.fechaHasta)}}
+            {{form_row(form.perfilPostulante)}}
+            {{form_row(form.conocRequeridos)}}
+            {{form_row(form.nivelCarreraCandidato)}}
+            {{form_row(form.tiposTrabajo)}}
+            {{form_row(form.subArea)}}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('solicitud') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('solicitud_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+            <div hidden>{{form_rest(form)}}</div>
+
+        </fieldset>
+        <div class="record_actions pull-right">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a class="btn btn-default" href="{{ path('solicitud') }}">
+                Volver
+            </a>
+
+        </div>
+
+    </form>
+</div>
+
+
 {%endblock%}

@@ -141,6 +141,15 @@ class UsuariosController extends Controller {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $factory = $this->get('security.encoder_factory');
+            $form=$editForm->getData();
+            $pass=$form->getPassword();
+            if ($pass=== "123456") {
+                $encoder = $factory->getEncoder($entity);
+                $password = $encoder->encodePassword('123456', $entity->getSalt());
+                $entity->setPassword($password);
+            }
+
             $em->persist($entity);
             $em->flush();
 

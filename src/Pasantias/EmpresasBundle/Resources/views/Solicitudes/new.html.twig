@@ -1,19 +1,27 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
-<h1>Solicitudes creation</h1>
+<h1>Nueva Solicitud</h1>
+<div class="well bs-component col-lg-10">
+    <form class="form-horizontal" action="{{ path('solicitud_create') }}" method="post" {{ form_enctype(form) }}>
+        <fieldset>    
+            {{form_row(form.fechaDesde)}}
+            {{form_row(form.fechaHasta)}}
+            {{form_row(form.perfilPostulante)}}
+            {{form_row(form.conocRequeridos)}}
+            {{form_row(form.nivelCarreraCandidato)}}
+            {{form_row(form.tiposTrabajo)}}
+            {{form_row(form.subArea)}}
+            
+            <div hidden>{{form_rest(form)}}</div>
+        </fieldset>
+        <div class="record_actions pull-right">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a class="btn btn-default" href="{{ path('solicitud') }}">
+                Volver
+            </a>
 
-<form action="{{ path('solicitud_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
+        </div>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('solicitud') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    </form>
+</div>
 {%endblock%}

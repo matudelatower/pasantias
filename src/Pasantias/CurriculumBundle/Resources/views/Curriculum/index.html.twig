@@ -1,40 +1,39 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
-<h1>Curriculum list</h1>
+<h1>Listado de Curriculum</h1>
 
-<table class="records_list">
+<table class="table table-striped table-hover ">
     <thead>
         <tr>
             <th>Id</th>
-            <th>Fecha</th>
-            <th>Actions</th>
+            <th>DNI</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Fecha de carga</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('curriculum_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.id }}</td>
+            <td>{{ entity.persona.dni }}</td>
+            <td>{{ entity.persona.nombre }}</td>
+            <td>{{ entity.persona.apellido }}</td>
+            <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y') }}{% endif %}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('curriculum_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('curriculum_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <a class="btn btn-default" href="{{ path('curriculum_show', { 'id': entity.id }) }}">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>       
+                <a class="btn btn-default" target="_blank" href="{{ path('curriculum_imprimir', { 'id': entity.id }) }}">
+                    <span class="glyphicon glyphicon-print"></span>
+                </a>  
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
-
-<ul>
-    <li>
-        <a href="{{ path('curriculum_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+<div class="navigation text-center">
+    {{ knp_pagination_render(entities) }}
+</div>
 {%endblock%}

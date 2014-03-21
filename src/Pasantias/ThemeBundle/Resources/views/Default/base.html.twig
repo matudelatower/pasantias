@@ -9,18 +9,15 @@
         <script src="{{asset('bundles/theme/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js')}}" type="text/javascript" ></script>
         <script src="{{asset('bundles/theme/js/bootstrap.min.js')}}" type="text/javascript" ></script>
         <script src="{{asset('bundles/theme/js/jquery.blockUI.js')}}" type="text/javascript" ></script>
-        
-        {% block javascripts %}
-
-
-        {% endblock %}
 
         <link href="{{asset('bundles/theme/css/estilo.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('bundles/theme/css/united/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('bundles/theme/css/menu.css')}}" rel="stylesheet" type="text/css" />
         <link type="text/css" href="{{asset('bundles/theme/js/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css')}}" rel="Stylesheet" />
         {% block stylesheets %}
-        {% endblock %}        
+        {% endblock %}     
+        {% block javascripts %}
+        {% endblock %}
 
         {#<script type="text/javascript" src="{{asset('bundles/theme/js/menu.js')}}"></script>#}
         {% block head %}{% endblock %}
@@ -41,30 +38,50 @@
 
         {{include('ThemeBundle:Default:menuSuperior.html.twig')}}
         <div class="container">
-            
+
             <div class="bs-docs-section">
-            {% block contenido %}{% endblock %}
+            {% block contenido %}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-dismissable alert-success">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                      {{ flashMessage }}
+                </div>
+
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                      {{ flashMessage }}
+                </div>
+
+                {% endfor %}
+
+            {% endblock %}
             </div>
         </div>
         <div id="footer">
             <script>
                 $(document).ready(function() {
-                    $(".date").on('focus', function() {
-                        $(this).datepicker({
-                            dateFormat: "dd-mm-yy",
-                            dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-                            monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-                            monthNamesShort: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-                            yearRange: "1900:2022",
-                            changeMonth: true,
-                            changeYear: true,
-                            showOtherMonths: true,
-                            selectOtherMonths: true,
-                            nextText: "Siguiente",
-                            prevText: "Anterior"
-                        });
-                        $(this).datepicker("option", "showAnim", 'slideDown');
+
+
+                    $('.tooltipOn').tooltip();
+{#                    $(".date").on('click', function() {#}
+                    $(".date").datepicker({
+                        dateFormat: "dd-mm-yy",
+                        dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                        monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                        monthNamesShort: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                        yearRange: "1900:2022",
+                        changeMonth: true,
+                        changeYear: true,
+                        showOtherMonths: true,
+                        selectOtherMonths: true,
+                        nextText: "Siguiente",
+                        prevText: "Anterior",
+                        showAnim: "slideDown"
                     });
+{#                        $(this).datepicker("option", "showAnim", 'slideDown');#}
+{#                    });#}
 
                     $(function() {
 

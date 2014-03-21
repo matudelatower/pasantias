@@ -2,33 +2,44 @@
 
 namespace Pasantias\EmpresasBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pasantias\EmpresasBundle\Entity\Postulaciones;
+use Pasantias\EmpresasBundle\Entity\Solicitudes;
+use Pasantias\EmpresasBundle\Form\SolicitudesType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Pasantias\EmpresasBundle\Entity\Solicitudes;
-use Pasantias\EmpresasBundle\Form\SolicitudesType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Solicitudes controller.
  *
  * @Route("/solicitud")
  */
-class SolicitudesController extends Controller
-{
+class SolicitudesController extends Controller {
+
     /**
      * Lists all Solicitudes entities.
      *
      * @Route("/", name="solicitud")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('EmpresasBundle:Solicitudes')->findAll();
+        if ($this->get('security.context')->isGranted('ROLE_EMPRESA')) {
+            $usuarioEmpresa = $this->get('security.context')->getToken()->getUser();
+            $empresa = $usuarioEmpresa->getEmpresa();
 
+            $solicitudes = $em->getRepository('EmpresasBundle:Solicitudes')->findByEmpresa($empresa);
+        } else {
+            $solicitudes = $em->getRepository('EmpresasBundle:Solicitudes')->findAll();
+        }
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+                $solicitudes, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
         return array(
             'entities' => $entities,
         );
@@ -40,8 +51,7 @@ class SolicitudesController extends Controller
      * @Route("/{id}/show", name="solicitud_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EmpresasBundle:Solicitudes')->find($id);
@@ -50,11 +60,10 @@ class SolicitudesController extends Controller
             throw $this->createNotFoundException('Unable to find Solicitudes entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+
 
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
         );
     }
 
@@ -64,15 +73,18 @@ class SolicitudesController extends Controller
      * @Route("/new", name="solicitud_new")
      * @Template()
      */
-    public function newAction()
-    {
-        $entity = new Solicitudes();
-        $form   = $this->createForm(new SolicitudesType(), $entity);
+    public function newAction() {
+        if ($this->get('security.context')->isGranted('ROLE_EMPRESA')) {
+            $entity = new Solicitudes();
+            $form = $this->createForm(new SolicitudesType(), $entity);
 
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+            return array(
+                'entity' => $entity,
+                'form' => $form->createView(),
+            );
+        } else {
+            throw new AccessDeniedException('Solo un usuario con Perfil de Empresa puede crear la Solicitud');
+        }
     }
 
     /**
@@ -82,23 +94,25 @@ class SolicitudesController extends Controller
      * @Method("POST")
      * @Template("EmpresasBundle:Solicitudes:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new Solicitudes();
+    public function createAction(Request $request) {
+        $entity = new Solicitudes();
         $form = $this->createForm(new SolicitudesType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $usuarioEmpresa = $this->get('security.context')->getToken()->getUser();
+            $empresa = $usuarioEmpresa->getEmpresa();
+            $entity->setEmpresa($empresa);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('solicitud_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('solicitud'));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +122,7 @@ class SolicitudesController extends Controller
      * @Route("/{id}/edit", name="solicitud_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EmpresasBundle:Solicitudes')->find($id);
@@ -119,12 +132,11 @@ class SolicitudesController extends Controller
         }
 
         $editForm = $this->createForm(new SolicitudesType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -135,8 +147,7 @@ class SolicitudesController extends Controller
      * @Method("POST")
      * @Template("EmpresasBundle:Solicitudes:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EmpresasBundle:Solicitudes')->find($id);
@@ -145,7 +156,7 @@ class SolicitudesController extends Controller
             throw $this->createNotFoundException('Unable to find Solicitudes entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+
         $editForm = $this->createForm(new SolicitudesType(), $entity);
         $editForm->bind($request);
 
@@ -157,9 +168,8 @@ class SolicitudesController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -169,8 +179,7 @@ class SolicitudesController extends Controller
      * @Route("/{id}/delete", name="solicitud_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +198,48 @@ class SolicitudesController extends Controller
         return $this->redirect($this->generateUrl('solicitud'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
+    public function postularseAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('EmpresasBundle:Solicitudes')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Solicitudes entity.');
+        }
+
+        if ($request->getMethod() == 'POST') {
+            $usuarioPersona = $this->get('security.context')->getToken()->getUser();
+            $persona = $usuarioPersona->getPersona();
+            $postulaciones=$em->getRepository('EmpresasBundle:Postulaciones')->findByPersona($persona);
+            if($postulaciones){
+                $this->get('session')->getFlashBag()->add(
+                    'error', 'Ya estas postulado a esta solicitud'
+            );
+            }else{
+                
+            
+            $postulacion = new Postulaciones();
+            $postulacion->setPersona($persona);
+            $postulacion->setSolicitud($entity);
+            $em->persist($postulacion);
+            $em->flush();
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Te postulaste a esta solicitud'
+            );
+            
+            }
+        }
+
+        return $this->render(
+                        'EmpresasBundle:Solicitudes:postularse.html.twig', array('entity' => $entity)
+        );
+    }
+
 }

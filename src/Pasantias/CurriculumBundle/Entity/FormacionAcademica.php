@@ -42,7 +42,7 @@ class FormacionAcademica {
     /** @ORM\Column(type="string", length=4) */
     private $egreso;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(name="estado_avance",type="string", length=100) */
     private $estadoAvance;
 
     /**

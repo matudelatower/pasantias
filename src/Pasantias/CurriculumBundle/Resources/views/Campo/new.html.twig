@@ -1,19 +1,21 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
-<h1>Campo creation</h1>
 
-<form action="{{ path('campo_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
+<h1>Alta de Campos</h1>
+<div class="well bs-component col-lg-10">
+    <form class="form-horizontal" action="{{ path('campo_create') }}" method="post" {{ form_enctype(form) }}>
+        <fieldset>    
+{{ form_widget(form) }}
+        </fieldset>
+        <div class="record_actions pull-right">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a class="btn btn-default" href="{{ path('campo') }}">
+                Volver
+            </a>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('campo') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+        </div>
+
+    </form>
+</div>
+
 {%endblock%}

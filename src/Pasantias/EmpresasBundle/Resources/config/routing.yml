@@ -86,6 +86,14 @@ solicitud_delete:
     defaults: { _controller: "EmpresasBundle:Solicitudes:delete" }
     requirements: { _method: post }
     
+solicitud_postularse:
+    pattern:  /solicitud/{id}/postularse
+    defaults: { _controller: "EmpresasBundle:Solicitudes:postularse" }
+
+solicitud_confirmar_postulacion:
+    pattern:  /solicitud/{id}/postularse
+    defaults: { _controller: "EmpresasBundle:Solicitudes:postularse" }
+    requirements: { _method: post }
 #Tipos Trabajo
 
 tipo_trabajo:

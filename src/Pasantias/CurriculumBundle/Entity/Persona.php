@@ -37,7 +37,7 @@ class Persona {
 
     /** @ORM\Column(type="string", length=100) */
     private $apellido;
-    
+
     /** @ORM\Column(type="string", length=1) */
     private $sexo;
 
@@ -47,13 +47,16 @@ class Persona {
     /** @ORM\Column(type="string", length=13) */
     private $cuit;
 
-    /** @ORM\Column(type="date") */
+    /** @ORM\Column(name="fecha_nacimiento",type="date") */
     private $fechaNacimiento;
 
     /** @ORM\OneToMany(targetEntity="Pasantias\CurriculumBundle\Entity\Domicilio", mappedBy="personas", cascade={"persist", "remove"}) 
      *  @Assert\Valid()
      */
     private $domicilio;
+
+    /** @ORM\Column(type="string", length=100) */
+    private $telefono;
 
     /** @ORM\OneToMany(targetEntity="Pasantias\CurriculumBundle\Entity\FormacionAcademica", mappedBy="personas", cascade={"persist", "remove"}) 
      *  @Assert\Valid()
@@ -80,11 +83,21 @@ class Persona {
      * @ORM\JoinColumn(name="curriculum_id", referencedColumnName="id")
      */
     protected $curriculum;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="Pasantias\UsuariosBundle\Entity\Usuarios", mappedBy="persona")
      */
     private $usuario;
+
+    /** @ORM\OneToMany(targetEntity="Pasantias\EmpresasBundle\Entity\Postulaciones", mappedBy="persona", cascade={"persist", "remove"}) 
+     *  @Assert\Valid()
+     */
+    private $postulaciones;
+
+    /** @ORM\OneToMany(targetEntity="Pasantias\CurriculumBundle\Entity\FormacionAcademicaSecundaria", mappedBy="personas", cascade={"persist", "remove"}) 
+     *  @Assert\Valid()
+     */
+    private $formacionAcademicaSecundaria;
 
     public function getAbsolutePath() {
         return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
@@ -110,16 +123,14 @@ class Persona {
      * @Assert\File(maxSize="6000000")
      */
     private $file;
-    
     private $temp;
 
-   /**
+    /**
      * Sets file.
      *
      * @param UploadedFile $file
      */
-    public function setFile(UploadedFile $file = null)
-    {
+    public function setFile(UploadedFile $file = null) {
         $this->file = $file;
         // check if we have an old image path
         if (isset($this->path)) {
@@ -130,21 +141,23 @@ class Persona {
             $this->path = 'initial';
         }
     }
-    
+
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
-    public function preUpload()
-    {
+    public function preUpload() {
         if (null !== $this->getFile()) {
             // haz lo que quieras para generar un nombre único
             //$filename = sha1(uniqid(mt_rand(), true));
-            $filename=  $this->dni;
-            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+            $filename = $this->dni;
+            $this->path = $filename . '.' . $this->getFile()->guessExtension();
         }
     }
 
+    public function __toString() {
+        return $this->apellido . " " . $this->nombre;
+    }
 
     /**
      * Get file.
@@ -186,6 +199,25 @@ class Persona {
         if ($file = $this->getAbsolutePath()) {
             unlink($file);
         }
+    }
+
+    public function setFormacionAcademica($formacionAcademica) {
+        $this->formacionAcademica = $formacionAcademica;
+    }
+    public function setFormacionAcademicaSecundaria($formacionAcademicaSecundaria) {
+        $this->formacionAcademicaSecundaria = $formacionAcademicaSecundaria;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->domicilio = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formacionAcademica = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->conocimientos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->antecedenteLaboral = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->postulaciones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->formacionAcademicaSecundaria = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -238,7 +270,7 @@ class Persona {
     public function getApellido() {
         return $this->apellido;
     }
-    
+
     /**
      * Set sexo
      *
@@ -324,36 +356,45 @@ class Persona {
     }
 
     /**
-     * Set domicilio
+     * Set telefono
      *
-     * @param \Pasantias\CurriculumBundle\Entity\Domicilio $domicilio
+     * @param string $telefono
      * @return Persona
      */
-    public function setDomicilio(\Pasantias\CurriculumBundle\Entity\Domicilio $domicilio = null) {
-        $this->domicilio = $domicilio;
+    public function setTelefono($telefono) {
+        $this->telefono = $telefono;
 
-        foreach ($domicilio as $domicilios) {
-            $domicilios->setPersonas($this);
-        }
+        return $this;
     }
 
     /**
-     * Get domicilio
+     * Get telefono
      *
-     * @return \Pasantias\CurriculumBundle\Entity\Domicilio 
+     * @return string 
      */
-    public function getDomicilio() {
-        return $this->domicilio;
+    public function getTelefono() {
+        return $this->telefono;
     }
 
     /**
-     * Constructor
+     * Set path
+     *
+     * @param string $path
+     * @return Persona
      */
-    public function __construct() {
-        $this->domicilio = new ArrayCollection();
-        $this->formacionAcademica = new ArrayCollection();
-        $this->conocimientos = new ArrayCollection();
-        $this->antecedenteLaboral=new ArrayCollection();
+    public function setPath($path) {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string 
+     */
+    public function getPath() {
+        return $this->path;
     }
 
     /**
@@ -378,6 +419,15 @@ class Persona {
     }
 
     /**
+     * Get domicilio
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDomicilio() {
+        return $this->domicilio;
+    }
+
+    /**
      * Add formacionAcademica
      *
      * @param \Pasantias\CurriculumBundle\Entity\FormacionAcademica $formacionAcademica
@@ -397,11 +447,6 @@ class Persona {
     public function removeFormacionAcademica(\Pasantias\CurriculumBundle\Entity\FormacionAcademica $formacionAcademica) {
         $this->formacionAcademica->removeElement($formacionAcademica);
     }
-    
-    public function setFormacionAcademica( $formacionAcademica )
-{
-    $this->formacionAcademica = $formacionAcademica;
-}
 
     /**
      * Get formacionAcademica
@@ -473,27 +518,6 @@ class Persona {
     }
 
     /**
-     * Set path
-     *
-     * @param string $path
-     * @return Persona
-     */
-    public function setPath($path) {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string 
-     */
-    public function getPath() {
-        return $this->path;
-    }
-
-    /**
      * Set curriculum
      *
      * @param \Pasantias\CurriculumBundle\Entity\Curriculum $curriculum
@@ -513,12 +537,6 @@ class Persona {
     public function getCurriculum() {
         return $this->curriculum;
     }
-    
-    public function __toString()
-    {
-        return $this->nombre;
-    }
-
 
     /**
      * Set usuario
@@ -526,10 +544,9 @@ class Persona {
      * @param \Pasantias\UsuariosBundle\Entity\Usuarios $usuario
      * @return Persona
      */
-    public function setUsuario(\Pasantias\UsuariosBundle\Entity\Usuarios $usuario = null)
-    {
+    public function setUsuario(\Pasantias\UsuariosBundle\Entity\Usuarios $usuario = null) {
         $this->usuario = $usuario;
-    
+
         return $this;
     }
 
@@ -538,8 +555,68 @@ class Persona {
      *
      * @return \Pasantias\UsuariosBundle\Entity\Usuarios 
      */
-    public function getUsuario()
-    {
+    public function getUsuario() {
         return $this->usuario;
     }
+
+    /**
+     * Add postulaciones
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones
+     * @return Persona
+     */
+    public function addPostulacione(\Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones) {
+        $this->postulaciones[] = $postulaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove postulaciones
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones
+     */
+    public function removePostulacione(\Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones) {
+        $this->postulaciones->removeElement($postulaciones);
+    }
+
+    /**
+     * Get postulaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPostulaciones() {
+        return $this->postulaciones;
+    }
+
+    /**
+     * Add formacionAcademicaSecundaria
+     *
+     * @param \Pasantias\CurriculumBundle\Entity\FormacionAcademicaSecundaria $formacionAcademicaSecundaria
+     * @return Persona
+     */
+    public function addFormacionAcademicaSecundaria(\Pasantias\CurriculumBundle\Entity\FormacionAcademicaSecundaria $formacionAcademicaSecundaria) {
+        $this->formacionAcademicaSecundaria[] = $formacionAcademicaSecundaria;
+
+        return $this;
+    }
+
+    /**
+     * Remove formacionAcademicaSecundaria
+     *
+     * @param \Pasantias\CurriculumBundle\Entity\FormacionAcademicaSecundaria $formacionAcademicaSecundaria
+     */
+    public function removeFormacionAcademicaSecundaria(\Pasantias\CurriculumBundle\Entity\FormacionAcademicaSecundaria $formacionAcademicaSecundaria) {
+        $this->formacionAcademicaSecundaria->removeElement($formacionAcademicaSecundaria);
+    }
+
+    /**
+     * Get formacionAcademicaSecundaria
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFormacionAcademicaSecundaria() {
+        return $this->formacionAcademicaSecundaria;
+    }
+
 }

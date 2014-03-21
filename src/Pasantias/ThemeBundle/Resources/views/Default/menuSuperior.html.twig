@@ -20,8 +20,14 @@
         {#{% set menu = knp_menu_get('PasantiasBundle:Builder:mainMenu', [], {'usuario': rol} ) %}
         {{ knp_menu_render(menu) }}#}
         <ul class="nav navbar-nav">
-            {% if is_granted('ROLE_ALUMNO') %}
+            {% if is_granted('ROLE_ALUMNO') or  is_granted('ROLE_PROFESOR') %}
             <li><a href="{{path('curriculum_homepage')}}">CV</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Solicitudes <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{path('solicitud')}}">Solicitud</a></li>                   
+                </ul>
+            </li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
             <li class="dropdown">

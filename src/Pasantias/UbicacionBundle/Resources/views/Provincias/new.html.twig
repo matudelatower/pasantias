@@ -1,19 +1,18 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
 <h1>Provincias creation</h1>
+<div class="well bs-component col-lg-10">
+    <form action="{{ path('pasantias_provincias_create') }}" method="post" {{ form_enctype(form) }}>
+        <fieldset>
+{{ form_widget(form) }}
+        </fieldset>   
+        <div class="record_actions pull-right">
+            <button class="btn btn-primary"type="submit">Guardar</button>
+            <a class="btn btn-default" href="{{ path('pasantias_provincias') }}">
+                Volver
+            </a>
 
-<form action="{{ path('pasantias_provincias_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('pasantias_provincias') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+        </div>
+    </form>
+</div>
 {%endblock%}

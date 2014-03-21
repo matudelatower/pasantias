@@ -33,6 +33,10 @@ curriculum_delete:
     defaults: { _controller: "CurriculumBundle:Curriculum:delete" }
     requirements: { _method: post }
     
+curriculum_imprimir:
+    pattern:  /curriculum/{id}/imprimir
+    defaults: { _controller: "CurriculumBundle:Curriculum:imprimir" }
+    
 carrera_homepage:
     pattern:  /carrera
     defaults: { _controller: "CurriculumBundle:Carrera:index" }

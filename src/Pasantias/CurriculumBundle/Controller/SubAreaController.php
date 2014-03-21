@@ -15,20 +15,22 @@ use Pasantias\CurriculumBundle\Form\SubAreaType;
  *
  * @Route("/sub_area")
  */
-class SubAreaController extends Controller
-{
+class SubAreaController extends Controller {
+
     /**
      * Lists all SubArea entities.
      *
      * @Route("/", name="sub_area")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CurriculumBundle:SubArea')->findAll();
-
+        $subAreas = $em->getRepository('CurriculumBundle:SubArea')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+                $subAreas, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
         return array(
             'entities' => $entities,
         );
@@ -40,8 +42,7 @@ class SubAreaController extends Controller
      * @Route("/{id}/show", name="sub_area_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:SubArea')->find($id);
@@ -53,7 +54,7 @@ class SubAreaController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -64,14 +65,13 @@ class SubAreaController extends Controller
      * @Route("/new", name="sub_area_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new SubArea();
-        $form   = $this->createForm(new SubAreaType(), $entity);
+        $form = $this->createForm(new SubAreaType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -82,9 +82,8 @@ class SubAreaController extends Controller
      * @Method("POST")
      * @Template("CurriculumBundle:SubArea:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new SubArea();
+    public function createAction(Request $request) {
+        $entity = new SubArea();
         $form = $this->createForm(new SubAreaType(), $entity);
         $form->bind($request);
 
@@ -98,7 +97,7 @@ class SubAreaController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +107,7 @@ class SubAreaController extends Controller
      * @Route("/{id}/edit", name="sub_area_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:SubArea')->find($id);
@@ -119,12 +117,11 @@ class SubAreaController extends Controller
         }
 
         $editForm = $this->createForm(new SubAreaType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -135,8 +132,7 @@ class SubAreaController extends Controller
      * @Method("POST")
      * @Template("CurriculumBundle:SubArea:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:SubArea')->find($id);
@@ -145,7 +141,7 @@ class SubAreaController extends Controller
             throw $this->createNotFoundException('Unable to find SubArea entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+
         $editForm = $this->createForm(new SubAreaType(), $entity);
         $editForm->bind($request);
 
@@ -157,9 +153,8 @@ class SubAreaController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -169,8 +164,7 @@ class SubAreaController extends Controller
      * @Route("/{id}/delete", name="sub_area_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +183,11 @@ class SubAreaController extends Controller
         return $this->redirect($this->generateUrl('sub_area'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

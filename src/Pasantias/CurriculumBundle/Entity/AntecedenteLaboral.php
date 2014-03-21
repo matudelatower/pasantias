@@ -32,19 +32,19 @@ class AntecedenteLaboral {
     /** @ORM\Column(type="string", length=100) */
     private $empresa;
 
-    /** @ORM\Column(type="date") */
+    /** @ORM\Column(name="desde",type="date") */
     private $fechaDesde;
 
-    /** @ORM\Column(type="string", length=100) */
-    private $fechaHasta;
+    /** @ORM\Column(name="hasta",type="string", length=100) */
+    private $hasta;
 
     /** @ORM\Column(type="text") */
     private $descripcion;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(name="nombre_contacto",type="string", length=100) */
     private $nombreContacto;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(name="tel_contacto",type="string", length=100) */
     private $telContacto;
     
 
@@ -105,26 +105,26 @@ class AntecedenteLaboral {
     }
 
     /**
-     * Set fechaHasta
+     * Set hasta
      *
-     * @param string $fechaHasta
+     * @param string $hasta
      * @return AntecedenteLaboral
      */
-    public function setFechaHasta($fechaHasta)
+    public function setHasta($hasta)
     {
-        $this->fechaHasta = $fechaHasta;
+        $this->hasta = $hasta;
     
         return $this;
     }
 
     /**
-     * Get fechaHasta
+     * Get hasta
      *
      * @return string 
      */
-    public function getFechaHasta()
+    public function getHasta()
     {
-        return $this->fechaHasta;
+        return $this->hasta;
     }
 
     /**

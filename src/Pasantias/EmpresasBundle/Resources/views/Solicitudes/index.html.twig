@@ -1,50 +1,61 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
-<h1>Solicitudes list</h1>
+<h1>Listado de Solicitudes</h1>
 
-<table class="records_list">
+<table class="table table-striped table-hover ">
     <thead>
         <tr>
             <th>Id</th>
-            <th>Fechadesde</th>
-            <th>Fechahasta</th>
-            <th>Perfilpostulante</th>
-            <th>Conocrequeridos</th>
-            <th>Nivelcarreracandidato</th>
-            <th>Solicitudatendida</th>
-            <th>Actions</th>
+            <th>Fecha desde</th>
+            <th>Fecha hasta</th>
+            <th>Perfil Postulante</th>
+            <th>Conocimientos Requeridos</th>
+            <th>Nivel Carrera</th>
+            <th>Solicitud Atendida</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('solicitud_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{% if entity.fechaDesde %}{{ entity.fechaDesde|date('Y-m-d H:i:s') }}{% endif %}</td>
-            <td>{% if entity.fechaHasta %}{{ entity.fechaHasta|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{{ entity.id }}</td>
+            <td>{% if entity.fechaDesde %}{{ entity.fechaDesde|date('d-m-Y') }}{% endif %}</td>
+            <td>{% if entity.fechaHasta %}{{ entity.fechaHasta|date('d-m-Y') }}{% endif %}</td>
             <td>{{ entity.perfilPostulante }}</td>
             <td>{{ entity.conocRequeridos }}</td>
             <td>{{ entity.nivelCarreraCandidato }}</td>
             <td>{{ entity.solicitudAtendida }}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('solicitud_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('solicitud_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <a class="btn btn-default" href="{{ path('solicitud_show', { 'id': entity.id }) }}">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+                {% if is_granted('ROLE_EMPRESA') %}
+                <a class="btn btn-default" href="{{ path('solicitud_edit', { 'id': entity.id }) }}">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                {%endif%}
+                {% if is_granted('ROLE_ALUMNO') %}
+                <a class="btn btn-default tooltipOn" href="{{ path('solicitud_postularse', { 'id': entity.id }) }}" data-toggle="tooltip" data-placement="right" title="" data-original-title="Postularse">
+                    <span class="glyphicon glyphicon-pushpin"></span>
+                </a>                
+                {%endif%}
+
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+<div class="navigation text-center">
+    {{ knp_pagination_render(entities) }}
+</div>
 
-<ul>
-    <li>
-        <a href="{{ path('solicitud_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+
+<div class="pull-right">
+    {% if is_granted('ROLE_EMPRESA') %}
+    <a class="btn btn-primary" href="{{ path('solicitud_new') }}">
+        Crear Nuevo
+    </a>
+    {%endif%}
+</div>
+
 {%endblock%}

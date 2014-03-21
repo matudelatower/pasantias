@@ -1,19 +1,20 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
-<h1>SubArea creation</h1>
+<h1>Alta de SubArea </h1>
+<div class="well bs-component col-lg-10">
+    <form class="form-horizontal" action="{{ path('sub_area_create') }}" method="post" {{ form_enctype(form) }}>
+        <fieldset>    
+{{ form_widget(form) }}
+        </fieldset>
+        <div class="record_actions pull-right">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a class="btn btn-default" href="{{ path('sub_area') }}">
+                Volver
+            </a>
 
-<form action="{{ path('sub_area_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
+        </div>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('sub_area') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    </form>
+</div>
+
 {%endblock%}

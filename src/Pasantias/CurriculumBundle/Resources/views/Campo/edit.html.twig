@@ -1,25 +1,21 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
-<h1>Campo edit</h1>
+<h1>Edicion de Campos</h1>
+<div class="well bs-component col-lg-10">
+    <form class="form-horizontal" action="{{ path('campo_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+        <fieldset>    
+{{ form_widget(form) }}
+        </fieldset>
+        <div class="record_actions pull-right">
+            <button class="btn btn-primary" type="submit">Guardar</button>
+            <a class="btn btn-default" href="{{ path('campo') }}">
+                Volver
+            </a>
 
-<form action="{{ path('campo_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+        </div>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('campo') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('campo_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    </form>
+</div>
+
+
 {%endblock%}

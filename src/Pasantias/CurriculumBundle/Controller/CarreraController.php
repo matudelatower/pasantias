@@ -27,7 +27,12 @@ class CarreraController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CurriculumBundle:Carrera')->findAll();
+        $carreras = $em->getRepository('CurriculumBundle:Carrera')->findAll();
+        
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+                $carreras, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
 
         return array(
             'entities' => $entities,
@@ -123,7 +128,7 @@ class CarreraController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -145,7 +150,7 @@ class CarreraController extends Controller
             throw $this->createNotFoundException('Unable to find Carrera entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        
         $editForm = $this->createForm(new CarreraType(), $entity);
         $editForm->bind($request);
 
@@ -158,8 +163,7 @@ class CarreraController extends Controller
 
         return array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView(),            
         );
     }
 

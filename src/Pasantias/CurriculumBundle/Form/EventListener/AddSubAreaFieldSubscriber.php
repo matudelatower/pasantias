@@ -46,7 +46,7 @@ class AddSubAreaFieldSubscriber implements EventSubscriberInterface
             'query_builder' => function (EntityRepository $repository) use ($area) {
                 $qb = $repository->createQueryBuilder('subArea')
                     ->innerJoin('subArea.area', 'area');
-                if ($area instanceof Areas) {
+                if ($area instanceof Area) {
                     $qb->where('subArea.area = :area')
                     ->setParameter('area', $area->getId());
                 } elseif (is_numeric($area)) {

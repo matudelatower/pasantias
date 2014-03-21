@@ -15,19 +15,23 @@ use Pasantias\CurriculumBundle\Form\NivelType;
  *
  * @Route("/nivel")
  */
-class NivelController extends Controller
-{
+class NivelController extends Controller {
+
     /**
      * Lists all Nivel entities.
      *
      * @Route("/", name="nivel")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CurriculumBundle:Nivel')->findAll();
+        $niveles = $em->getRepository('CurriculumBundle:Nivel')->findAll();
+
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+                $niveles, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
 
         return array(
             'entities' => $entities,
@@ -40,8 +44,7 @@ class NivelController extends Controller
      * @Route("/{id}/show", name="nivel_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Nivel')->find($id);
@@ -50,11 +53,10 @@ class NivelController extends Controller
             throw $this->createNotFoundException('Unable to find Nivel entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+
 
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
         );
     }
 
@@ -64,14 +66,13 @@ class NivelController extends Controller
      * @Route("/new", name="nivel_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Nivel();
-        $form   = $this->createForm(new NivelType(), $entity);
+        $form = $this->createForm(new NivelType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -82,9 +83,8 @@ class NivelController extends Controller
      * @Method("POST")
      * @Template("CurriculumBundle:Nivel:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new Nivel();
+    public function createAction(Request $request) {
+        $entity = new Nivel();
         $form = $this->createForm(new NivelType(), $entity);
         $form->bind($request);
 
@@ -98,7 +98,7 @@ class NivelController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +108,7 @@ class NivelController extends Controller
      * @Route("/{id}/edit", name="nivel_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Nivel')->find($id);
@@ -119,12 +118,11 @@ class NivelController extends Controller
         }
 
         $editForm = $this->createForm(new NivelType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -135,8 +133,7 @@ class NivelController extends Controller
      * @Method("POST")
      * @Template("CurriculumBundle:Nivel:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Nivel')->find($id);
@@ -145,7 +142,7 @@ class NivelController extends Controller
             throw $this->createNotFoundException('Unable to find Nivel entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+
         $editForm = $this->createForm(new NivelType(), $entity);
         $editForm->bind($request);
 
@@ -157,9 +154,8 @@ class NivelController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -169,8 +165,7 @@ class NivelController extends Controller
      * @Route("/{id}/delete", name="nivel_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +184,11 @@ class NivelController extends Controller
         return $this->redirect($this->generateUrl('nivel'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

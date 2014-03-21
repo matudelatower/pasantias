@@ -15,19 +15,22 @@ use Pasantias\CurriculumBundle\Form\CampoType;
  *
  * @Route("/campo")
  */
-class CampoController extends Controller
-{
+class CampoController extends Controller {
+
     /**
      * Lists all Campo entities.
      *
      * @Route("/", name="campo")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('CurriculumBundle:Campo')->findAll();
+        $campos = $em->getRepository('CurriculumBundle:Campo')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+                $campos, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+        );
 
         return array(
             'entities' => $entities,
@@ -40,8 +43,7 @@ class CampoController extends Controller
      * @Route("/{id}/show", name="campo_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Campo')->find($id);
@@ -53,7 +55,7 @@ class CampoController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -64,14 +66,13 @@ class CampoController extends Controller
      * @Route("/new", name="campo_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Campo();
-        $form   = $this->createForm(new CampoType(), $entity);
+        $form = $this->createForm(new CampoType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -82,9 +83,8 @@ class CampoController extends Controller
      * @Method("POST")
      * @Template("CurriculumBundle:Campo:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new Campo();
+    public function createAction(Request $request) {
+        $entity = new Campo();
         $form = $this->createForm(new CampoType(), $entity);
         $form->bind($request);
 
@@ -98,7 +98,7 @@ class CampoController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -108,8 +108,7 @@ class CampoController extends Controller
      * @Route("/{id}/edit", name="campo_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Campo')->find($id);
@@ -119,12 +118,11 @@ class CampoController extends Controller
         }
 
         $editForm = $this->createForm(new CampoType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -135,8 +133,7 @@ class CampoController extends Controller
      * @Method("POST")
      * @Template("CurriculumBundle:Campo:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Campo')->find($id);
@@ -145,7 +142,7 @@ class CampoController extends Controller
             throw $this->createNotFoundException('Unable to find Campo entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+
         $editForm = $this->createForm(new CampoType(), $entity);
         $editForm->bind($request);
 
@@ -157,9 +154,8 @@ class CampoController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -169,8 +165,7 @@ class CampoController extends Controller
      * @Route("/{id}/delete", name="campo_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -189,11 +184,11 @@ class CampoController extends Controller
         return $this->redirect($this->generateUrl('campo'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

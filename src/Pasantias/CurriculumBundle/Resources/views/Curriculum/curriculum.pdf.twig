@@ -7,7 +7,9 @@
 	<META NAME="AUTHOR" CONTENT="Matias Solis de la Torre">
 	<META NAME="CREATED" CONTENT="20140321;19081500">
 	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
-	<META NAME="CHANGED" CONTENT="20140321;19555900">
+	<META NAME="CHANGED" CONTENT="20140324;17071600">
+	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
+	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
 	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
 	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
 	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
@@ -20,15 +22,19 @@
 	</STYLE>
 </HEAD>
 <BODY LANG="es-ES" DIR="LTR">
-<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><U><FONT SIZE=4><B>{{curriculum.persona.nombre}}
+    {%set foto_perfil = foto_perfil_path~curriculum.persona.path %}
+    
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">{% if file_exists(foto_perfil) %} <IMG SRC="{{ foto_perfil }} " NAME="gráficos1" ALIGN=RIGHT WIDTH=141 HEIGHT=133 BORDER=0>{%endif%}<BR CLEAR=RIGHT><U><FONT SIZE=4><B>{{curriculum.persona.nombre}}
 {{curriculum.persona.apellido}}</B></U></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
 <P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none">
 <FONT SIZE=3>{% set domicilio = curriculum.persona.domicilio|first%}</FONT></P>
 <P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none">
-<FONT SIZE=3>{{domicilio.calle}} {{domicilio.numero}}
-{{domicilio.depto}} {{domicilio.piso}}</FONT></P>
+<FONT SIZE=3>{%if domicilio %}{{domicilio.calle}}
+{{domicilio.numero}} {{domicilio.depto}} {{domicilio.piso}}</FONT></P>
 <P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none">
-<FONT SIZE=3>{{domicilio.localidad}}</FONT></P>
+<FONT SIZE=3>{{domicilio.localidad}}{%endif%}</FONT></P>
 <P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none">
 <FONT SIZE=3>Tel: {{curriculum.persona.telefono}}</FONT></P>
 <P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none">
@@ -59,8 +65,8 @@ curriculum.persona.antecedenteLaboral %}</FONT></P>
 <UL>
 	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none"><A NAME="__DdeLink__16_1240641439"></A>
 	<FONT SIZE=3>{{antecedenteLaboral.empresa}}:
-	{{antecedenteLaboral.descripcion}}. {{antecedenteLaboral.fechaDesde |
-	date ('M-Y')}} - {{antecedenteLaboral.hasta|date ('M-Y')}}</FONT></P>
+	{{antecedenteLaboral.descripcion}}. {{antecedenteLaboral.fechaDesde
+	| date ('M-Y')}} - {{antecedenteLaboral.hasta|date ('M-Y')}}</FONT></P>
 </UL>
 <P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none">
 <FONT SIZE=3>{% endfor %}</FONT></P>

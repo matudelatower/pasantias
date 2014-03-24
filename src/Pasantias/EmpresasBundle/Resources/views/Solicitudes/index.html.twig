@@ -26,9 +26,11 @@
             <td>{{ entity.nivelCarreraCandidato }}</td>
             <td>{{ entity.solicitudAtendida }}</td>
             <td>
+                {% if is_granted('ROLE_ADMIN') %}
                 <a class="btn btn-default" href="{{ path('solicitud_show', { 'id': entity.id }) }}">
                     <span class="glyphicon glyphicon-eye-open"></span>
                 </a>
+                {%endif%}
                 {% if is_granted('ROLE_EMPRESA') %}
                 <a class="btn btn-default" href="{{ path('solicitud_edit', { 'id': entity.id }) }}">
                     <span class="glyphicon glyphicon-edit"></span>

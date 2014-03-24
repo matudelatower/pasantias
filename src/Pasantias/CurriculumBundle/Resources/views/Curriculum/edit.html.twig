@@ -1,5 +1,6 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
+{{ parent() }}
 {% block stylesheets %}
 <link href="{{asset('bundles/theme/css/curriculum.css')}}" rel="stylesheet" type="text/css" />
 {% endblock %}
@@ -80,6 +81,7 @@
                     {{ form_row(form.persona.nombre) }}
                     {{ form_row(form.persona.apellido) }}
                     {{ form_row(form.persona.dni) }}
+                    {{ form_row(form.persona.sexo) }}
                     <div class="form-group">
                         {{ form_label(form.persona.cuit ,'CUIT', { 'label_attr': {'class': 'col-lg-2 control-label'} } ) }}
                         <div class="col-lg-10">

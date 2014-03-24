@@ -145,8 +145,11 @@ class CurriculumController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add(
+                        'success', 'Curriculum creado correctamente.'
+                );
 
-            return $this->redirect($this->generateUrl('curriculum_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $entity->getId())));
         }
 
         return array(
@@ -164,6 +167,7 @@ class CurriculumController extends Controller {
     public function editAction(Request $request, $id) {
         $domicilioOriginal = array();
         $antecentesOriginal = array();
+        $formacionAcademicaSecundariaOriginal = array();
         $formacionAcademicaOriginal = array();
         $conocimientosOriginal = array();
 
@@ -321,6 +325,9 @@ class CurriculumController extends Controller {
 
                 $em->persist($entity);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add(
+                        'success', 'Curriculum actualizado correctamente.'
+                );
 
                 return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $id)));
             }
@@ -438,7 +445,7 @@ class CurriculumController extends Controller {
         $curriculum = $em->getRepository('CurriculumBundle:Curriculum')->findOneById($id);
 
 
-
+        
         $html = $this->renderView('CurriculumBundle:Curriculum:curriculum.pdf.twig', array(
             "curriculum" => $curriculum
         ));

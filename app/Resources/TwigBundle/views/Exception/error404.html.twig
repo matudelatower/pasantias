@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+         <!-- Bootstrap core CSS -->
+        <link href="{{asset('bundles/theme/css/united/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Custom styles for this template -->
+        <link href="{{asset('bundles/theme/css/login.css')}}" rel="stylesheet" type="text/css" />
+
+        <!-- Just for debugging purposes. Don't actually copy this line! -->
+        <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        <title>Algo salio mal: {{ status_text |trans}}</title>
+    </head>
+    <body>
+        <div class="container text-center">
+        <h1>Ocurrió un Error</h1>
+        <h2>Error:  "{{ status_code }} {{ status_text |trans}}".</h2>
+
+        
+            Ocurrio un error. Por favor contacte con el administrador.
+        </div>
+    </body>
+</html>

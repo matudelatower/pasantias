@@ -1,7 +1,10 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-
+    
+parameters:
+    foto_perfil_path: %kernel.root_dir%/../web/foto_perfil/
+    
 framework:
     #esi:             ~
     translator:      { fallback: "%locale%" }
@@ -25,6 +28,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+        foto_perfil_path: %foto_perfil_path%
 
 # Assetic Configuration
 assetic:

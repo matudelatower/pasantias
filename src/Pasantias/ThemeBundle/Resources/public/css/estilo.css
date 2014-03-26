@@ -171,6 +171,14 @@
     color:#FF0000;
 }
 
+.ui-widget-header{
+    color: black !important;
+    font-weight: normal !important;
+}
+#ui-datepicker-div{
+    z-index: 9999 !important;
+}
+
 #pie{
 
 }

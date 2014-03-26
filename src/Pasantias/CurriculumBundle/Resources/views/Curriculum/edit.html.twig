@@ -275,9 +275,11 @@
 
     <div class="">
 
-        <button class="btn btn-primary" type="submit">Guardar</button>
+        <button class="btn btn-primary" type="submit">
+            <span class="glyphicon glyphicon-floppy-disk"></span>
+            Guardar</button>
 
-        <a class="btn btn-default" href="{{ path('curriculum_homepage') }}">
+        <a class="btn btn-default" href="{{ path('pasantias_homepage') }}">
             Volver
         </a>
         <a class="btn btn-default" target="_blank" href="{{ path('curriculum_imprimir', { 'id': entity.id }) }}">

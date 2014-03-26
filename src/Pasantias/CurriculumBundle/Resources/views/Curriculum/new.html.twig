@@ -34,6 +34,13 @@
 
 
 {% endset %}
+
+    {% set formacion_sec_proto %}
+    <td>{{ form_widget(form.persona.formacionAcademicaSecundaria.vars.prototype.egreso) }}</td>
+    <td>{{ form_widget(form.persona.formacionAcademicaSecundaria.vars.prototype.institucion) }}</td>
+    <td>{{ form_widget(form.persona.formacionAcademicaSecundaria.vars.prototype.titulo) }}</td>
+    <td class="action"></td>
+{% endset %}
 {% set formacion_proto %}
     <td>{{ form_widget(form.persona.formacionAcademica.vars.prototype.ingreso) }}</td>
     <td>{{ form_widget(form.persona.formacionAcademica.vars.prototype.egreso) }}</td>
@@ -91,7 +98,7 @@
 
                 </div>
                 <div class="col-lg-4 col-lg-offset-1">
-                   
+
                 </div>
             </fieldset>
             <fieldset>
@@ -135,7 +142,31 @@
         <div class="tab-pane fade" id="formacion-academica">
             <fieldset>
                 <div class="col-lg-15">
-                    <legend>Datos Academicos</legend>
+                    <legend>Datos Académicos Secundarios</legend>
+                    <table class="datos_academicos_secundarios table" data-prototype="{{ formacion_sec_proto|e }}">
+                        <tbody>
+
+                            <tr>
+                                <td><label>Egreso </label></td>
+                                <td><label>Institución</label></td>
+                                <td><label>Título</label></td>                            
+                                <td>Accion</td>
+                            </tr>
+
+        {# itera sobre cada etiqueta existente y reproduce su único campo: name #}
+        {% for formacionAcademicaSecundaria in form.persona.formacionAcademicaSecundaria %}
+                            <tr>
+                                <td>{{ form_widget(formacionAcademicaSecundaria.egreso) }}</td>
+                                <td>{{ form_widget(formacionAcademicaSecundaria.institucion) }}</td>
+                                <td>{{ form_widget(formacionAcademicaSecundaria.titulo) }}</td>
+                                <td class="action"></td>
+{#                        {{ form_widget(formacionAcademicas) }}#}
+
+                            </tr>
+        {% endfor %}
+                        </tbody>
+                    </table>
+                    <legend>Datos Académicos Universitarios</legend>
 
                     <table class="datos_academicos table" data-prototype="{{ formacion_proto|e }}">
                         <tbody>

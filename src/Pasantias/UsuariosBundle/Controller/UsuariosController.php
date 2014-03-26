@@ -2,10 +2,12 @@
 
 namespace Pasantias\UsuariosBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Pasantias\UsuariosBundle\Entity\Usuarios;
+use Pasantias\UsuariosBundle\Form\ChangePasswordType;
+use Pasantias\UsuariosBundle\Form\Model\ChangePassword;
 use Pasantias\UsuariosBundle\Form\UsuariosType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Usuarios controller.
@@ -142,9 +144,9 @@ class UsuariosController extends Controller {
 
         if ($editForm->isValid()) {
             $factory = $this->get('security.encoder_factory');
-            $form=$editForm->getData();
-            $pass=$form->getPassword();
-            if ($pass=== "123456") {
+            $form = $editForm->getData();
+            $pass = $form->getPassword();
+            if ($pass === "123456") {
                 $encoder = $factory->getEncoder($entity);
                 $password = $encoder->encodePassword('123456', $entity->getSalt());
                 $entity->setPassword($password);
@@ -194,6 +196,43 @@ class UsuariosController extends Controller {
                         ->add('id', 'hidden')
                         ->getForm()
         ;
+    }
+
+    public function changePasswordAction(Request $request) {
+        $changePasswordModel = new ChangePassword();
+        $form = $this->createForm(new ChangePasswordType(), $changePasswordModel);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // perform some action,
+            $user = $this->get('security.context')->getToken()->getUser();
+            $encoder = $this->get('security.encoder_factory')->getEncoder($user);
+            $plainPassword = $form["newPassword"]->getData();
+            $password = $encoder->encodePassword($plainPassword, $user->getSalt());
+            if ($password !== $user->getPassword()) {
+
+                $user->setPassword($password);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
+                // such as encoding with MessageDigestPasswordEncoder and persist
+                $this->get('session')->getFlashBag()->add(
+                        'success', 'Contraseña Actualizada Correctamente!'
+                );
+                return $this->redirect($this->generateUrl('pasantias_homepage'));
+            } else {
+                $this->get('session')->getFlashBag()->add(
+                        'error', 'La contraseña no puede coincidir con la actual.'
+                );
+            }
+        }
+
+        return $this->render('UsuariosBundle:Usuarios:cambiarPassword.html.twig', array(
+                    'form' => $form->createView(),
+//                    'delete_form' => $deleteForm->createView(),
+        ));
     }
 
 }

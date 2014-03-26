@@ -22,10 +22,10 @@ class Perfil implements RoleInterface {
      */
     protected $id;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(name="nombre_perfil",type="string", length=100) */
     protected $nombrePerfil;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(name="role_name",type="string", length=100) */
     protected $roleName;
 
     /**

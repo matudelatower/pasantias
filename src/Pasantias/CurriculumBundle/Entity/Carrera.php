@@ -46,7 +46,7 @@ class Carrera {
     /** @ORM\Column(type="string", length=100) */
     private $duracion;
 
-    /** @ORM\Column(type="string", length=100, nullable=true) */
+    /** @ORM\Column(name="cantidad_materias",type="string", length=100, nullable=true) */
     private $cantidadMaterias;
 
     /**

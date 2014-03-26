@@ -22,28 +22,32 @@ class Solicitudes {
      */
     private $id;
 
-    /** @ORM\Column(type="date") */
+    /** @ORM\Column(name="fecha_desde",type="date") */
     private $fechaDesde;
 
-    /** @ORM\Column(type="date") */
+    /** @ORM\Column(name="fecha_hasta",type="date") */
     private $fechaHasta;
 
-    /** @ORM\Column(type="text") */
+    /** @ORM\Column(name="perfil_postulante",type="text") */
     private $perfilPostulante;
 
-    /** @ORM\Column(type="text") */
+    /** @ORM\Column(name="conocimientos_requeridos",type="text") */
     private $conocRequeridos;
 
-    /** @ORM\Column(type="text") */
+    /** @ORM\Column(name="nivel_carrera_candidato",type="text") */
     private $nivelCarreraCandidato;
 
-    /** @ORM\Column(type="boolean") */
+    /** @ORM\Column(name="solicitud_atendida",type="boolean") */
     private $solicitudAtendida;
 
-    /** @ORM\OneToOne(targetEntity="Pasantias\EmpresasBundle\Entity\TiposTrabajo") */
+    /** 
+     * @ORM\Column(name="tipo_trabajo_id")
+     * @ORM\OneToOne(targetEntity="Pasantias\EmpresasBundle\Entity\TiposTrabajo") */
     private $tiposTrabajo;
 
-    /** @ORM\OneToOne(targetEntity="Pasantias\CurriculumBundle\Entity\SubArea") */
+    /** 
+     * @ORM\Column(name="sub_area_id")
+     * @ORM\OneToOne(targetEntity="Pasantias\CurriculumBundle\Entity\SubArea") */
     private $subArea;
 
     /** @ORM\ManyToOne(targetEntity="Pasantias\EmpresasBundle\Entity\Empresas") */

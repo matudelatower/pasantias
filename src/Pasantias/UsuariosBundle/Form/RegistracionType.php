@@ -54,4 +54,4 @@ class RegistracionType extends AbstractType {
 
 }
 
-?>
+

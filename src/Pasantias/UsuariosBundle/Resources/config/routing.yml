@@ -31,6 +31,9 @@ usuarios_edit:
     pattern:  /usuarios/{id}/edit
     defaults: { _controller: "UsuariosBundle:Usuarios:edit" }
     
+usuarios_change_password:
+    pattern: /usuarios/cambiar_password
+    defaults: { _controller: UsuariosBundle:Usuarios:changePassword }    
 
 usuarios_update:
     pattern:  /usuarios/{id}/update

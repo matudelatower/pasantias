@@ -30,19 +30,19 @@ class Empresas {
      */
     private $domicilio;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(name="persona_contacto",type="string", length=100) */
     private $personaContacto;
 
-    /** @ORM\Column(type="string", length=100) */
+    /** @ORM\Column(name="tel_contacto",type="string", length=100) */
     private $telContacto;
 
-    /** @ORM\Column(type="string", length=100) 
+    /** @ORM\Column(name="mail_contacto",type="string", length=100) 
      * @Assert\Email()
      */
     private $mailContacto;
 
     /** 
-     * @ORM\Column(type="string", length=100,nullable=true) 
+     * @ORM\Column(name="pagina_web",type="string", length=100,nullable=true) 
      * 
      */
     private $paginaWeb;

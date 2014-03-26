@@ -4,20 +4,13 @@ security:
             algorithm: sha512
             encode-as-base64: true
             iterations: 10
-        Symfony\Component\Security\Core\User\User: plaintext
+#        Symfony\Component\Security\Core\User\User: plaintext
  
     role_hierarchy:
 #        ROLE_ADMIN: ROLE_USER
 #        ROLE_USER: [ROLE_EMPRESA, ROLE_ALUMNO, ROLE_PROFESOR]
 #        ROLE_ADMIN: [ROLE_EMPRESA, ROLE_ALUMNO, ROLE_PROFESOR]
     providers:
-        chain_provider:
-            chain:
-                providers: [in_memory, usuarios]
-        in_memory:
-            memory:
-                users:
-                    admin: { password: 123456, roles: ROLE_ADMIN }
         usuarios:
             entity: { class: Pasantias\UsuariosBundle\Entity\Usuarios, property: usuario }
  
@@ -25,7 +18,7 @@ security:
         main:
 #            pattern: /.*
             pattern: ^/*
-            provider: chain_provider
+            provider: usuarios
             form_login:
                 login_path: login
                 check_path: login_check

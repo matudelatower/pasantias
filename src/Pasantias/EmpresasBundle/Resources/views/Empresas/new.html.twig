@@ -1,5 +1,6 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
+{{parent()}}
 <h1>Alta de Empresas</h1>
 <div class="well bs-component col-lg-10">
     <form class="form-horizontal" action="{{ path('empresas_create') }}" method="post" {{ form_enctype(form) }}>

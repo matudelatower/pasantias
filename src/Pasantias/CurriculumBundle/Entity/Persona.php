@@ -98,6 +98,12 @@ class Persona {
      *  @Assert\Valid()
      */
     private $formacionAcademicaSecundaria;
+    
+    /** @ORM\OneToMany(targetEntity="Pasantias\EmpresasBundle\Entity\SolicitudesNuevas", mappedBy="personas")      
+     */
+    private $solicitudNueva;
+    
+    
 
     public function getAbsolutePath() {
         return null === $this->path ? null : $this->getUploadRootDir() . '/' . $this->path;
@@ -120,7 +126,10 @@ class Persona {
     }
 
     /**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(maxSize="6000000",
+     *      mimeTypes = {"image/*"},
+     *     mimeTypesMessage = "Solo se admiten imágenes"
+     * )
      */
     private $file;
     private $temp;
@@ -204,6 +213,7 @@ class Persona {
     public function setFormacionAcademica($formacionAcademica) {
         $this->formacionAcademica = $formacionAcademica;
     }
+
     public function setFormacionAcademicaSecundaria($formacionAcademicaSecundaria) {
         $this->formacionAcademicaSecundaria = $formacionAcademicaSecundaria;
     }
@@ -619,4 +629,37 @@ class Persona {
         return $this->formacionAcademicaSecundaria;
     }
 
+
+    /**
+     * Add solicitudNueva
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\SolicitudesNuevas $solicitudNueva
+     * @return Persona
+     */
+    public function addSolicitudNueva(\Pasantias\EmpresasBundle\Entity\SolicitudesNuevas $solicitudNueva)
+    {
+        $this->solicitudNueva[] = $solicitudNueva;
+    
+        return $this;
+    }
+
+    /**
+     * Remove solicitudNueva
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\SolicitudesNuevas $solicitudNueva
+     */
+    public function removeSolicitudNueva(\Pasantias\EmpresasBundle\Entity\SolicitudesNuevas $solicitudNueva)
+    {
+        $this->solicitudNueva->removeElement($solicitudNueva);
+    }
+
+    /**
+     * Get solicitudNueva
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSolicitudNueva()
+    {
+        return $this->solicitudNueva;
+    }
 }

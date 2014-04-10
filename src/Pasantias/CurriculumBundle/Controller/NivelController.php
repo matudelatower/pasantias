@@ -92,8 +92,12 @@ class NivelController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Nivel creado correctamente.'
+            );
 
-            return $this->redirect($this->generateUrl('nivel_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('nivel'));
         }
 
         return array(
@@ -150,7 +154,11 @@ class NivelController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('nivel_edit', array('id' => $id)));
+           $this->get('session')->getFlashBag()->add(
+                    'success', 'Nivel modificado correctamente.'
+            );
+
+            return $this->redirect($this->generateUrl('nivel'));
         }
 
         return array(

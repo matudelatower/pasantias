@@ -91,8 +91,12 @@ class SubAreaController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Sub Area creada correctamente.'
+            );
 
-            return $this->redirect($this->generateUrl('sub_area_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('sub_area'));
         }
 
         return array(

@@ -3,12 +3,17 @@
 namespace Pasantias\EmpresasBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Pasantias\EmpresasBundle\Entity\TiposTrabajo
  */
 /**
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"descripcion"}, 
+ *     message="Ya existe el tipo de trabajo"
+ * )
  * @ORM\Table(name="tipos_trabajos")
  */
 class TiposTrabajo

@@ -2,8 +2,9 @@
 
 namespace Pasantias\EmpresasBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Pasantias\CurriculumBundle\Entity\Persona;
 use Pasantias\PasantiasBundle\Entity\Empresas;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller {
@@ -36,6 +37,23 @@ class DefaultController extends Controller {
         return $this->render('EmpresasBundle:Default:new.html.twig', array(
                     'form' => $form->createView(),
         ));
+    }
+
+    public function solicitudesNuevasAction(Persona $idPersona) {
+        $em = $this->getDoctrine()->getManager();
+
+        $consulta = $em->createQuery('
+        SELECT count(s)
+        FROM EmpresasBundle:Solicitudes s
+        LEFT JOIN s.solicitudNueva sn 
+        WHERE sn.visto = false
+        OR sn.visto IS NULL
+        ');
+        $notificaciones = $consulta->getResult()[0][1];
+
+        return $this->render(
+                        'EmpresasBundle:Default:notificaciones.html.twig', array('notificaciones' => $notificaciones)
+        );
     }
 
 }

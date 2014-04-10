@@ -40,14 +40,17 @@ class Solicitudes {
     /** @ORM\Column(name="solicitud_atendida",type="boolean") */
     private $solicitudAtendida;
 
-    /** 
-     * @ORM\Column(name="tipo_trabajo_id")
-     * @ORM\OneToOne(targetEntity="Pasantias\EmpresasBundle\Entity\TiposTrabajo") */
+    /**
+     * @ORM\OneToOne(targetEntity="Pasantias\EmpresasBundle\Entity\TiposTrabajo") 
+     * @ORM\JoinColumn(name="tipo_trabajo_id", referencedColumnName="id")
+     *      
+     */
     private $tiposTrabajo;
 
-    /** 
-     * @ORM\Column(name="sub_area_id")
-     * @ORM\OneToOne(targetEntity="Pasantias\CurriculumBundle\Entity\SubArea") */
+    /**
+     * @ORM\ManyToOne(targetEntity="Pasantias\CurriculumBundle\Entity\SubArea") 
+     * @ORM\JoinColumn(name="sub_area_id", referencedColumnName="id")
+     */
     private $subArea;
 
     /** @ORM\ManyToOne(targetEntity="Pasantias\EmpresasBundle\Entity\Empresas") */
@@ -57,6 +60,10 @@ class Solicitudes {
      *  @Assert\Valid()
      */
     private $postulaciones;
+
+    /** @ORM\OneToMany(targetEntity="Pasantias\EmpresasBundle\Entity\SolicitudesNuevas", mappedBy="solicitudes")      
+     */
+    private $solicitudNueva;
 
     /**
      * Get id
@@ -259,21 +266,19 @@ class Solicitudes {
     /**
      * Constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->postulaciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add postulaciones
      *
      * @param \Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones
      * @return Solicitudes
      */
-    public function addPostulacione(\Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones)
-    {
+    public function addPostulacione(\Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones) {
         $this->postulaciones[] = $postulaciones;
-    
+
         return $this;
     }
 
@@ -282,8 +287,7 @@ class Solicitudes {
      *
      * @param \Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones
      */
-    public function removePostulacione(\Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones)
-    {
+    public function removePostulacione(\Pasantias\EmpresasBundle\Entity\Postulaciones $postulaciones) {
         $this->postulaciones->removeElement($postulaciones);
     }
 
@@ -292,8 +296,38 @@ class Solicitudes {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPostulaciones()
-    {
+    public function getPostulaciones() {
         return $this->postulaciones;
     }
+
+    /**
+     * Add solicitudNueva
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\SolicitudesNuevas $solicitudNueva
+     * @return Solicitudes
+     */
+    public function addSolicitudNueva(\Pasantias\EmpresasBundle\Entity\SolicitudesNuevas $solicitudNueva) {
+        $this->solicitudNueva[] = $solicitudNueva;
+
+        return $this;
+    }
+
+    /**
+     * Remove solicitudNueva
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\SolicitudesNuevas $solicitudNueva
+     */
+    public function removeSolicitudNueva(\Pasantias\EmpresasBundle\Entity\SolicitudesNuevas $solicitudNueva) {
+        $this->solicitudNueva->removeElement($solicitudNueva);
+    }
+
+    /**
+     * Get solicitudNueva
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSolicitudNueva() {
+        return $this->solicitudNueva;
+    }
+
 }

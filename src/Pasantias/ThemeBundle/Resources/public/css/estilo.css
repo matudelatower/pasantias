@@ -182,3 +182,14 @@
 #pie{
 
 }
+
+.margin-top-20{
+    margin-top: 20px;
+}
+
+.margin-top-40{
+    margin-top: 40px;
+}
+.bs-docs-section{
+    margin-top: 8em;    
+}

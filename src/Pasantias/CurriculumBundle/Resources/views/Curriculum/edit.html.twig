@@ -2,16 +2,25 @@
 {% block contenido %}
 {{ parent() }}
 {% block stylesheets %}
-<link href="{{asset('bundles/theme/css/curriculum.css')}}" rel="stylesheet" type="text/css" />
+
+
 {% endblock %}
 
 {% block javascripts %}
 
-<script type="text/javascript" src="{{asset('bundles/theme/js/curvycorners.src.js')}}"></script>
-<script type="text/javascript" src="{{asset('bundles/theme/js/selectTab.js')}}"></script>
-{% endblock %}
-<h1>Modificar Curriculum</h1>
 
+{% endblock %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="page-header">
+            <h1>Modificar Curriculum</h1>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
 {#<form action="{{ path('curriculum_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>#}
 <form class="form-horizontal" action="{{ path('curriculum_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
     <ul class="nav nav-tabs" style="margin-bottom: 15px;">
@@ -287,6 +296,6 @@
         </a>
     </div>
 </form>
-
+</div>
 
 {%endblock%}

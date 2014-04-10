@@ -15,16 +15,15 @@ use Pasantias\EmpresasBundle\Form\TiposTrabajoType;
  *
  * @Route("/tipo_trabajo")
  */
-class TiposTrabajoController extends Controller
-{
+class TiposTrabajoController extends Controller {
+
     /**
      * Lists all TiposTrabajo entities.
      *
      * @Route("/", name="tipo_trabajo")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $tiposTrabajo = $em->getRepository('EmpresasBundle:TiposTrabajo')->findAll();
@@ -44,8 +43,7 @@ class TiposTrabajoController extends Controller
      * @Route("/{id}/show", name="tipo_trabajo_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EmpresasBundle:TiposTrabajo')->find($id);
@@ -54,11 +52,10 @@ class TiposTrabajoController extends Controller
             throw $this->createNotFoundException('Unable to find TiposTrabajo entity.');
         }
 
-        
+
 
         return array(
-            'entity'      => $entity,
-            
+            'entity' => $entity,
         );
     }
 
@@ -68,14 +65,13 @@ class TiposTrabajoController extends Controller
      * @Route("/new", name="tipo_trabajo_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new TiposTrabajo();
-        $form   = $this->createForm(new TiposTrabajoType(), $entity);
+        $form = $this->createForm(new TiposTrabajoType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -86,9 +82,8 @@ class TiposTrabajoController extends Controller
      * @Method("POST")
      * @Template("EmpresasBundle:TiposTrabajo:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
-        $entity  = new TiposTrabajo();
+    public function createAction(Request $request) {
+        $entity = new TiposTrabajo();
         $form = $this->createForm(new TiposTrabajoType(), $entity);
         $form->bind($request);
 
@@ -96,13 +91,17 @@ class TiposTrabajoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Tipo de trabajo creado correctamente.'
+            );
 
             return $this->redirect($this->generateUrl('tipo_trabajo'));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -112,8 +111,7 @@ class TiposTrabajoController extends Controller
      * @Route("/{id}/edit", name="tipo_trabajo_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EmpresasBundle:TiposTrabajo')->find($id);
@@ -123,12 +121,11 @@ class TiposTrabajoController extends Controller
         }
 
         $editForm = $this->createForm(new TiposTrabajoType(), $entity);
-        
+
 
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
-            
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -139,8 +136,7 @@ class TiposTrabajoController extends Controller
      * @Method("POST")
      * @Template("EmpresasBundle:TiposTrabajo:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('EmpresasBundle:TiposTrabajo')->find($id);
@@ -149,7 +145,7 @@ class TiposTrabajoController extends Controller
             throw $this->createNotFoundException('Unable to find TiposTrabajo entity.');
         }
 
-        
+
         $editForm = $this->createForm(new TiposTrabajoType(), $entity);
         $editForm->bind($request);
 
@@ -157,13 +153,16 @@ class TiposTrabajoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('tipo_trabajo_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Tipo de trabajo modificado correctamente.'
+            );
+
+            return $this->redirect($this->generateUrl('tipo_trabajo'));
         }
 
         return array(
-            'entity'      => $entity,
-            'form'   => $editForm->createView(),
-            
+            'entity' => $entity,
+            'form' => $editForm->createView(),
         );
     }
 
@@ -173,8 +172,7 @@ class TiposTrabajoController extends Controller
      * @Route("/{id}/delete", name="tipo_trabajo_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->bind($request);
 
@@ -193,11 +191,11 @@ class TiposTrabajoController extends Controller
         return $this->redirect($this->generateUrl('tipo_trabajo'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

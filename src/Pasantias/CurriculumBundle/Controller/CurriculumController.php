@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -66,7 +67,7 @@ class CurriculumController extends Controller {
         $entity = $em->getRepository('CurriculumBundle:Curriculum')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Curriculum entity.');
+            throw $this->createNotFoundException('El Curriculum no existe');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -84,15 +85,13 @@ class CurriculumController extends Controller {
      * @Template()
      */
     public function newAction() {
-        $entity = new Curriculum();
-//        $persona =new Persona();
-//        $entity->setPersona($persona);
-//        $form = $this->createForm(new CurriculumType(), $entity);
-        $form = $this->createForm(new CurriculumPersonasType(), $entity);
-//        $persona=new \Pasantias\CurriculumBundle\Entity\Persona;
-//        $persona->setNombre("matias");
-//        $entity->setPersona($persona);
 
+        if (false === $this->get('security.context')->isGranted('ROLE_ALUMNO')) {
+            throw new AccessDeniedException('No tiene permisos suficientes');
+        }
+        $entity = new Curriculum();
+
+        $form = $this->createForm(new CurriculumPersonasType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -146,8 +145,8 @@ class CurriculumController extends Controller {
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add(
-                        'success', 'Curriculum creado correctamente.'
-                );
+                    'success', 'Curriculum creado correctamente.'
+            );
 
             return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $entity->getId())));
         }
@@ -165,6 +164,11 @@ class CurriculumController extends Controller {
      * @Template()
      */
     public function editAction(Request $request, $id) {
+        if (false === $this->get('security.context')->isGranted('ROLE_ALUMNO')) {
+
+            throw new AccessDeniedException('No tiene permisos suficientes');
+        }
+
         $domicilioOriginal = array();
         $antecentesOriginal = array();
         $formacionAcademicaSecundariaOriginal = array();
@@ -176,7 +180,7 @@ class CurriculumController extends Controller {
         $entity = $em->getRepository('CurriculumBundle:Curriculum')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Curriculum entity.');
+            throw $this->createNotFoundException('El Curriculum no existe.');
         }
 
         foreach ($entity->getPersona()->getDomicilio() as $domicilio) {
@@ -445,7 +449,11 @@ class CurriculumController extends Controller {
         $curriculum = $em->getRepository('CurriculumBundle:Curriculum')->findOneById($id);
 
 
-        
+        if (!$curriculum) {
+            throw $this->createNotFoundException('El Curriculum no existe');
+        }
+
+
         $html = $this->renderView('CurriculumBundle:Curriculum:curriculum.pdf.twig', array(
             "curriculum" => $curriculum
         ));

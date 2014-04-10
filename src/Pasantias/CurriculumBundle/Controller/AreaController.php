@@ -94,7 +94,12 @@ class AreaController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('area_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Area creada correctamente.'
+            );
+
+            return $this->redirect($this->generateUrl('area'));
+//            return $this->redirect($this->generateUrl('area_show', array('id' => $entity->getId())));
         }
 
         return array(

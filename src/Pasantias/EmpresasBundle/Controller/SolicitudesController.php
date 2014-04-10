@@ -4,6 +4,7 @@ namespace Pasantias\EmpresasBundle\Controller;
 
 use Pasantias\EmpresasBundle\Entity\Postulaciones;
 use Pasantias\EmpresasBundle\Entity\Solicitudes;
+use Pasantias\EmpresasBundle\Entity\SolicitudesNuevas;
 use Pasantias\EmpresasBundle\Form\SolicitudesType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,6 +36,18 @@ class SolicitudesController extends Controller {
             $solicitudes = $em->getRepository('EmpresasBundle:Solicitudes')->findByEmpresa($empresa);
         } else {
             $solicitudes = $em->getRepository('EmpresasBundle:Solicitudes')->findAll();
+            
+            $usuarioPersona= $this->get('security.context')->getToken()->getUser();
+            $persona=$usuarioPersona->getPersona();
+            
+            foreach ($solicitudes as $solicitud) {
+                $solicitudNueva = new SolicitudesNuevas();
+                $solicitudNueva->setSolicitudes($solicitud);
+                $solicitudNueva->setVisto(TRUE);
+                $solicitudNueva->setPersona($persona);
+                $em->persist($solicitudNueva);
+            }
+            $em->flush();
         }
         $paginator = $this->get('knp_paginator');
         $entities = $paginator->paginate(
@@ -75,6 +88,16 @@ class SolicitudesController extends Controller {
      */
     public function newAction() {
         if ($this->get('security.context')->isGranted('ROLE_EMPRESA')) {
+
+            $usuarioEmpresa = $this->get('security.context')->getToken()->getUser();
+            $empresa = $usuarioEmpresa->getEmpresa();
+            if (!$empresa) {
+
+                $this->get('session')->getFlashBag()->add(
+                        'warning', 'Primero Debe cargar el perfil de empresa'
+                );
+                return $this->redirect($this->generateUrl('empresas_new'));
+            }
             $entity = new Solicitudes();
             $form = $this->createForm(new SolicitudesType(), $entity);
 
@@ -217,23 +240,22 @@ class SolicitudesController extends Controller {
         if ($request->getMethod() == 'POST') {
             $usuarioPersona = $this->get('security.context')->getToken()->getUser();
             $persona = $usuarioPersona->getPersona();
-            $postulaciones=$em->getRepository('EmpresasBundle:Postulaciones')->findByPersona($persona);
-            if($postulaciones){
+            $postulaciones = $em->getRepository('EmpresasBundle:Postulaciones')->findByPersona($persona);
+            if ($postulaciones) {
                 $this->get('session')->getFlashBag()->add(
-                    'error', 'Ya estas postulado a esta solicitud'
-            );
-            }else{
-                
-            
-            $postulacion = new Postulaciones();
-            $postulacion->setPersona($persona);
-            $postulacion->setSolicitud($entity);
-            $em->persist($postulacion);
-            $em->flush();
-            $this->get('session')->getFlashBag()->add(
-                    'success', 'Te postulaste a esta solicitud'
-            );
-            
+                        'error', 'Ya estas postulado a esta solicitud'
+                );
+            } else {
+
+
+                $postulacion = new Postulaciones();
+                $postulacion->setPersona($persona);
+                $postulacion->setSolicitud($entity);
+                $em->persist($postulacion);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add(
+                        'success', 'Te postulaste a esta solicitud'
+                );
             }
         }
 

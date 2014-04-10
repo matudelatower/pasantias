@@ -97,8 +97,12 @@ class CarreraController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Carrera creada correctamente.'
+            );
 
-            return $this->redirect($this->generateUrl('carrera_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('carrera_homepage'));
         }
 
         return array(
@@ -158,7 +162,11 @@ class CarreraController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('carrera_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Carrera modificada correctamente.'
+            );
+
+            return $this->redirect($this->generateUrl('carrera_homepage'));
         }
 
         return array(

@@ -2,6 +2,8 @@
 
 namespace Pasantias\EmpresasBundle\Form;
 
+use Pasantias\CurriculumBundle\Form\EventListener\AddAreaFieldSubscriber;
+use Pasantias\CurriculumBundle\Form\EventListener\AddSubAreaFieldSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -9,6 +11,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class SolicitudesType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $factory = $builder->getFormFactory();
+        $areaSubscriber = new AddAreaFieldSubscriber($factory);
+        $builder->addEventSubscriber($areaSubscriber);
+        $subAreaSubscriber = new AddSubAreaFieldSubscriber($factory);
+        $builder->addEventSubscriber($subAreaSubscriber);
         $builder
                 ->add('fechaDesde', 'date', array(
                     'widget' => 'single_text',
@@ -41,8 +48,11 @@ class SolicitudesType extends AbstractType {
                 ->add('solicitudAtendida', 'checkbox', array(
                     'required' => false,
                 ))
-                ->add('tiposTrabajo')
-                ->add('subArea')
+                ->add('tiposTrabajo', 'entity', array(
+                    'class' => 'EmpresasBundle:TiposTrabajo',                    
+                    'empty_value' => 'Seleccionar',
+                ))
+                //->add('subArea')
                 ->add('empresa')
         ;
     }

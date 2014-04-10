@@ -35,9 +35,10 @@ class PersonaType extends AbstractType {
                 ))
                 ->add('file', 'file', array(
                     'label' => 'Foto',
-                    'required'=>false,
-                    'attr'=>array('class'=>'btn btn-primary btn-sm')
-                    ))
+                    'required' => false,
+                    'attr' => array('accept' => "image/*",
+                        'class' => 'btn btn-primary btn-sm')
+                ))
                 ->add('path')
                 ->add('telefono')
                 ->add('domicilio', 'collection', array(

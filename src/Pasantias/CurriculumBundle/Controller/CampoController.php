@@ -92,8 +92,12 @@ class CampoController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add(
+                    'success', 'Campo creado correctamente.'
+            );
 
-            return $this->redirect($this->generateUrl('campo_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('campo'));
         }
 
         return array(

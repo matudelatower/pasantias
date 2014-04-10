@@ -3,6 +3,7 @@
 namespace Pasantias\UbicacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Pasantias\UbicacionBundle\Entity\Localidades
@@ -10,6 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"nombreProvincia"}, 
+ *     message="Ya existe la provincia."
+ * )
  * @ORM\Table(name="provincias")
  */
 class Provincias {
@@ -24,14 +29,12 @@ class Provincias {
     /** @ORM\Column(type="string", length=50, name="nombre") */
     private $nombreProvincia;
 
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -41,10 +44,9 @@ class Provincias {
      * @param string $nombreProvincia
      * @return Provincias
      */
-    public function setNombreProvincia($nombreProvincia)
-    {
+    public function setNombreProvincia($nombreProvincia) {
         $this->nombreProvincia = $nombreProvincia;
-    
+
         return $this;
     }
 
@@ -53,13 +55,12 @@ class Provincias {
      *
      * @return string 
      */
-    public function getNombreProvincia()
-    {
+    public function getNombreProvincia() {
         return $this->nombreProvincia;
     }
-    
-    public function __toString()
-    {
+
+    public function __toString() {
         return $this->nombreProvincia;
     }
+
 }

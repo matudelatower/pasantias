@@ -137,11 +137,11 @@ class EmpresasController extends Controller {
 
         $form->bind($request);
         if ($form->isValid()) {
-            $empresa = $entity->getEmpresa();
+            
 
             $usuario = $this->get('security.context')->getToken()->getUser();
 
-            $usuario->setEmpresa($empresa);
+            $usuario->setEmpresa($entity);
 
             foreach ($entity->getDomicilio() as $domicilio) {
                 $domicilio->setEmpresas($entity);
@@ -151,7 +151,7 @@ class EmpresasController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('empresas_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('empresas_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('EmpresasBundle:Empresas:new.html.twig', array(

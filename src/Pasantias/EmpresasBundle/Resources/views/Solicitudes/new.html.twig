@@ -1,5 +1,27 @@
 {% extends 'ThemeBundle:Default:base.html.twig' %}
 {% block contenido %}
+<script>
+    $(document).ready(function() {
+        $(document).on('change', '.area_selector', function() {
+            var $this = $(this);
+
+            var data = {
+                area_id: $this.val(),
+            };
+
+            $.ajax({
+                type: 'post',
+                url: '{{ path("select_subareas") }}',
+                data: data,
+                success: function(data) {
+
+                    $('.subArea_selector').html(data);
+                    
+                }
+            });
+        });
+    })
+</script>
 <h1>Nueva Solicitud</h1>
 <div class="well bs-component col-lg-10">
     <form class="form-horizontal" action="{{ path('solicitud_create') }}" method="post" {{ form_enctype(form) }}>
@@ -10,12 +32,13 @@
             {{form_row(form.conocRequeridos)}}
             {{form_row(form.nivelCarreraCandidato)}}
             {{form_row(form.tiposTrabajo)}}
+            {{form_row(form.area)}}
             {{form_row(form.subArea)}}
-            
+
             <div hidden>{{form_rest(form)}}</div>
         </fieldset>
         <div class="record_actions pull-right">
-            <button class="btn btn-primary" type="submit">Guardar</button>
+            <button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon glyphicon-hdd"></i> Guardar</button>
             <a class="btn btn-default" href="{{ path('solicitud') }}">
                 Volver
             </a>

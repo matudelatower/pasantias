@@ -3,6 +3,7 @@
 namespace Pasantias\UbicacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Pasantias\UbicacionBundle\Entity\Localidades
@@ -10,6 +11,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"nombreLocalidad", "provincias"},
+ *     errorPath="nombreLocalidad",
+ *     message="Ya existe la localidad en esta provincia."
+ * )
  * @ORM\Table(name="localidades")
  */
 class Localidades {
@@ -29,14 +35,12 @@ class Localidades {
      */
     private $provincias;
 
-
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -46,10 +50,9 @@ class Localidades {
      * @param string $nombreLocalidad
      * @return Localidades
      */
-    public function setNombreLocalidad($nombreLocalidad)
-    {
+    public function setNombreLocalidad($nombreLocalidad) {
         $this->nombreLocalidad = $nombreLocalidad;
-    
+
         return $this;
     }
 
@@ -58,8 +61,7 @@ class Localidades {
      *
      * @return string 
      */
-    public function getNombreLocalidad()
-    {
+    public function getNombreLocalidad() {
         return $this->nombreLocalidad;
     }
 
@@ -69,10 +71,9 @@ class Localidades {
      * @param \Pasantias\UbicacionBundle\Entity\Provincias $provincia
      * @return Localidades
      */
-    public function setProvincia(\Pasantias\UbicacionBundle\Entity\Provincias $provincia = null)
-    {
+    public function setProvincia(\Pasantias\UbicacionBundle\Entity\Provincias $provincia = null) {
         $this->provincia = $provincia;
-    
+
         return $this;
     }
 
@@ -81,8 +82,7 @@ class Localidades {
      *
      * @return \Pasantias\UbicacionBundle\Entity\Provincias 
      */
-    public function getProvincia()
-    {
+    public function getProvincia() {
         return $this->provincias;
     }
 
@@ -92,10 +92,9 @@ class Localidades {
      * @param \Pasantias\UbicacionBundle\Entity\Provincias $provincias
      * @return Localidades
      */
-    public function setProvincias(\Pasantias\UbicacionBundle\Entity\Provincias $provincias = null)
-    {
+    public function setProvincias(\Pasantias\UbicacionBundle\Entity\Provincias $provincias = null) {
         $this->provincias = $provincias;
-    
+
         return $this;
     }
 
@@ -104,13 +103,12 @@ class Localidades {
      *
      * @return \Pasantias\UbicacionBundle\Entity\Provincias 
      */
-    public function getProvincias()
-    {
+    public function getProvincias() {
         return $this->provincias;
     }
-    
-    public function __toString()
-    {
+
+    public function __toString() {
         return $this->nombreLocalidad;
     }
+
 }

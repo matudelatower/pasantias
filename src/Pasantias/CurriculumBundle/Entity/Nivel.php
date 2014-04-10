@@ -14,6 +14,7 @@
 namespace Pasantias\CurriculumBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Pasantias\CurriculumBundle\Entity\Nivel
@@ -21,16 +22,21 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(
+ *     fields={"nombre"}, 
+ *     message="Ya existe el nivel"
+ * )
  * @ORM\Table(name="nivel")
  */
 class Nivel {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
     private $id;
-    
+
     /** @ORM\Column(type="string", length=20) */
     private $nombre;
 
@@ -39,8 +45,7 @@ class Nivel {
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -50,10 +55,9 @@ class Nivel {
      * @param string $nombre
      * @return Nivel
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -62,13 +66,12 @@ class Nivel {
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
-    
-    public function __toString()
-    {
+
+    public function __toString() {
         return $this->nombre;
     }
+
 }

@@ -7,7 +7,8 @@
 	<META NAME="AUTHOR" CONTENT="Matias Solis de la Torre">
 	<META NAME="CREATED" CONTENT="20140321;19081500">
 	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
-	<META NAME="CHANGED" CONTENT="20140324;17071600">
+	<META NAME="CHANGED" CONTENT="20140409;18203000">
+	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
 	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
 	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
 	<META NAME="CHANGEDBY" CONTENT="Matias Solis de la Torre">
@@ -45,7 +46,18 @@
 </P>
 <P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT SIZE=3><U><B>Formación
 Académica</B></U></FONT></P>
-<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none"><A NAME="__DdeLink__7_1240641439"></A>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none"><A NAME="__DdeLink__7_859824424"></A>
+<FONT SIZE=3>{% for formacionAcademicaSecundaria in
+curriculum.persona.formacionAcademicaSecundaria %}</FONT></P>
+<UL>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none">
+	<FONT SIZE=3>{{formacionAcademicaSecundaria.institucion}}:
+	{{formacionAcademicaSecundaria.titulo}}. 
+	{{formacionAcademicaSecundaria.egreso}}</FONT></P>
+</UL>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none">
+<FONT SIZE=3>{% endfor %}</FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-weight: normal; text-decoration: none"><A NAME="__DdeLink__4_859824424"></A><A NAME="__DdeLink__7_1240641439"></A>
 <FONT SIZE=3>{% for formacionAcademica in
 curriculum.persona.formacionAcademica %}</FONT></P>
 <UL>

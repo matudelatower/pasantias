@@ -53,6 +53,13 @@ class Postulaciones {
      * @ORM\JoinColumn(name="profesor_id", referencedColumnName="id")
      */
     private $profesor;
+    
+     /** @ORM\OneToMany(targetEntity="Pasantias\EmpresasBundle\Entity\PostulacionesNuevas", mappedBy="postulaciones")      
+     */
+    private $postulacionNueva;
+    
+    /** @ORM\Column(type="date") */
+    private $fecha;
 
     public function __construct() {
         $this->visto=FALSE;
@@ -182,5 +189,61 @@ class Postulaciones {
     public function getProfesor()
     {
         return $this->profesor;
+    }
+
+    /**
+     * Add postulacionNueva
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\PostulacionesNuevas $postulacionNueva
+     * @return Postulaciones
+     */
+    public function addPostulacionNueva(\Pasantias\EmpresasBundle\Entity\PostulacionesNuevas $postulacionNueva)
+    {
+        $this->postulacionNueva[] = $postulacionNueva;
+    
+        return $this;
+    }
+
+    /**
+     * Remove postulacionNueva
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\PostulacionesNuevas $postulacionNueva
+     */
+    public function removePostulacionNueva(\Pasantias\EmpresasBundle\Entity\PostulacionesNuevas $postulacionNueva)
+    {
+        $this->postulacionNueva->removeElement($postulacionNueva);
+    }
+
+    /**
+     * Get postulacionNueva
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPostulacionNueva()
+    {
+        return $this->postulacionNueva;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     * @return Postulaciones
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+    
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime 
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
     }
 }

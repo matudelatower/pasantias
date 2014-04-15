@@ -51,6 +51,10 @@ class Empresas {
      * @ORM\OneToOne(targetEntity="Pasantias\UsuariosBundle\Entity\Usuarios", mappedBy="empresa")
      */
     private $usuario;
+    
+    /** @ORM\OneToMany(targetEntity="Pasantias\EmpresasBundle\Entity\PostulacionesNuevas", mappedBy="empresa")      
+     */
+    private $postulacionNueva;
 
     /**
      * Get id
@@ -242,4 +246,37 @@ class Empresas {
         return $this->usuario;
     }
 
+
+    /**
+     * Add postulacionNueva
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\PostulacionesNuevas $postulacionNueva
+     * @return Empresas
+     */
+    public function addPostulacionNueva(\Pasantias\EmpresasBundle\Entity\PostulacionesNuevas $postulacionNueva)
+    {
+        $this->postulacionNueva[] = $postulacionNueva;
+    
+        return $this;
+    }
+
+    /**
+     * Remove postulacionNueva
+     *
+     * @param \Pasantias\EmpresasBundle\Entity\PostulacionesNuevas $postulacionNueva
+     */
+    public function removePostulacionNueva(\Pasantias\EmpresasBundle\Entity\PostulacionesNuevas $postulacionNueva)
+    {
+        $this->postulacionNueva->removeElement($postulacionNueva);
+    }
+
+    /**
+     * Get postulacionNueva
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPostulacionNueva()
+    {
+        return $this->postulacionNueva;
+    }
 }

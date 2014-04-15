@@ -61,7 +61,7 @@ class SolicitudesController extends Controller {
     /**
      * Finds and displays a Solicitudes entity.
      *
-     * @Route("/{id}/show", name="solicitud_show")
+     * @Route("/{id}/show", name="solicitud_show")     
      * @Template()
      */
     public function showAction($id) {
@@ -73,11 +73,15 @@ class SolicitudesController extends Controller {
             throw $this->createNotFoundException('Unable to find Solicitudes entity.');
         }
 
-
-
-        return array(
-            'entity' => $entity,
+        
+        return $this->render(
+                        'EmpresasBundle:Solicitudes:modalSolicitudes.html.twig', array('entity' => $entity)
         );
+
+
+//        return array(
+//            'entity' => $entity,
+//        );
     }
 
     /**
@@ -251,6 +255,7 @@ class SolicitudesController extends Controller {
                 $postulacion = new Postulaciones();
                 $postulacion->setPersona($persona);
                 $postulacion->setSolicitud($entity);
+                $postulacion->setFecha(new \DateTime('now'));
                 $em->persist($postulacion);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(

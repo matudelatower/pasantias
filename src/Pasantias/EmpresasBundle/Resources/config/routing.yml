@@ -130,3 +130,11 @@ tipo_trabajo_delete:
 select_localidades:
     pattern:  /empresas/localidades
     defaults: { _controller: "EmpresasBundle:Empresas:localidades" }   
+
+postulaciones_index:
+    pattern: /postulacion/index
+    defaults: { _controller: EmpresasBundle:Postulaciones:index }
+
+postulaciones_show:
+    pattern: /postulacion/{id}/show
+    defaults: { _controller: EmpresasBundle:Postulaciones:show }

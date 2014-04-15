@@ -3,7 +3,7 @@
 namespace Pasantias\EmpresasBundle\Controller;
 
 use Pasantias\CurriculumBundle\Entity\Persona;
-use Pasantias\PasantiasBundle\Entity\Empresas;
+use Pasantias\EmpresasBundle\Entity\Empresas;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -48,6 +48,23 @@ class DefaultController extends Controller {
         LEFT JOIN s.solicitudNueva sn 
         WHERE sn.visto = false
         OR sn.visto IS NULL
+        ');
+        $notificaciones = $consulta->getResult()[0][1];
+
+        return $this->render(
+                        'EmpresasBundle:Default:notificaciones.html.twig', array('notificaciones' => $notificaciones)
+        );
+    }
+    
+    public function postulacionesNuevasAction(Empresas $idEmpresa) {
+        $em = $this->getDoctrine()->getManager();
+
+        $consulta = $em->createQuery('
+        SELECT count(p)
+        FROM EmpresasBundle:Postulaciones p
+        LEFT JOIN p.postulacionNueva pn 
+        WHERE pn.visto = false
+        OR pn.visto IS NULL
         ');
         $notificaciones = $consulta->getResult()[0][1];
 

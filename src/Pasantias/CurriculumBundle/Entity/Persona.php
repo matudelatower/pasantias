@@ -99,7 +99,7 @@ class Persona {
      */
     private $formacionAcademicaSecundaria;
     
-    /** @ORM\OneToMany(targetEntity="Pasantias\EmpresasBundle\Entity\SolicitudesNuevas", mappedBy="personas")      
+    /** @ORM\OneToMany(targetEntity="Pasantias\EmpresasBundle\Entity\SolicitudesNuevas", mappedBy="persona")      
      */
     private $solicitudNueva;
     

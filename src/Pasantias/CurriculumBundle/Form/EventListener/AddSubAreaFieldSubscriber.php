@@ -29,7 +29,7 @@ class AddSubAreaFieldSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::PRE_BIND     => 'preBind'
+            FormEvents::PRE_SUBMIT     => 'preSubmit'
         );
     }
 
@@ -71,7 +71,7 @@ class AddSubAreaFieldSubscriber implements EventSubscriberInterface
             return;
         }
         
-        $accessor = PropertyAccess::getPropertyAccessor();
+        $accessor = PropertyAccess::createPropertyAccessor();
         $subArea = $accessor->getValue($data, 'subArea');
         //$province = ($city) ? $city->getProvince() : null ;
         //$this->addCityForm($form, $city, $province);
@@ -82,7 +82,7 @@ class AddSubAreaFieldSubscriber implements EventSubscriberInterface
         $this->addSubAreaForm($form,$subArea, $area);
     }
 
-    public function preBind(FormEvent $event)
+    public function prehandleRequest(FormEvent $event)
     {
         $data = $event->getData();
         $form = $event->getForm();

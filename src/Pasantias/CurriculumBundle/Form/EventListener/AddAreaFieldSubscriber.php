@@ -27,7 +27,7 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
     {
         return array(
             FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::PRE_BIND     => 'preBind'
+            FormEvents::PRE_SUBMIT     => 'preSubmit'
         );
     }
 
@@ -63,7 +63,7 @@ class AddAreaFieldSubscriber implements EventSubscriberInterface
         $this->addAreaForm($form, $area);
     }
 
-    public function preBind(FormEvent $event)
+    public function prehandleRequest(FormEvent $event)
     {
         $data = $event->getData();
         $form = $event->getForm();

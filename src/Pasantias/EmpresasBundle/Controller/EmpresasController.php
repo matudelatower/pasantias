@@ -100,7 +100,7 @@ class EmpresasController extends Controller {
 //        $form = $this->createForm(new \Pasantias\CurriculumBundle\Form\DomicilioType(), $empresa);
 //
 //        if ($request->isMethod("POST")) {
-//            $form->bind($request);
+//            $form->handleRequest($request);
 //
 //            if ($form->isValid()) {
 //                $em = $this->getDoctrine()->getManager();
@@ -135,7 +135,7 @@ class EmpresasController extends Controller {
         $entity = new Empresas();
         $form = $this->createForm(new DomicilioEmpresasType(), $entity);
 
-        $form->bind($request);
+        $form->handleRequest($request);
         if ($form->isValid()) {
             
 
@@ -162,7 +162,7 @@ class EmpresasController extends Controller {
 //        $form = $this->createForm(new EmpresasType(), $entity);
 //
 //        if ($request->isMethod("POST")) {
-//            $form->bind($request);
+//            $form->handleRequest($request);
 //
 //            if ($form->isValid()) {
 //                $em = $this->getDoctrine()->getManager();
@@ -234,7 +234,7 @@ class EmpresasController extends Controller {
 
 
         if ($request->isMethod("POST")) {
-            $editForm->bind($request);
+            $editForm->handleRequest($request);
             if ($editForm->isValid()) {
 
                 foreach ($entity->getDomicilio() as $domicilio) {
@@ -292,7 +292,7 @@ class EmpresasController extends Controller {
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new DomicilioEmpresasType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
 
         if ($editForm->isValid()) {
@@ -341,7 +341,7 @@ class EmpresasController extends Controller {
      */
     public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

@@ -22,7 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Route("/curriculum")
  */
-class CurriculumController extends Controller {
+class CurriculumController extends Controller
+{
 
     /**
      * Lists all Curriculum entities.
@@ -30,13 +31,17 @@ class CurriculumController extends Controller {
      * @Route("/", name="curriculum")
      * @Template()
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         if ($this->get('security.context')->isGranted('ROLE_ALUMNO')) {
             $usuarioPersona = $this->get('security.context')->getToken()->getUser();
             if ($usuarioPersona->getPersona()) {
-                $curriculum = $em->getRepository('CurriculumBundle:Curriculum')->findOneByPersona($usuarioPersona->getPersona());
+                $curriculum = $em->getRepository('CurriculumBundle:Curriculum')->findOneByPersona(
+                    $usuarioPersona->getPersona()
+                );
+
                 return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $curriculum->getId())));
             } else {
                 return $this->redirect($this->generateUrl('curriculum_new'));
@@ -45,7 +50,9 @@ class CurriculumController extends Controller {
             $curriculums = $em->getRepository('CurriculumBundle:Curriculum')->findAll();
             $paginator = $this->get('knp_paginator');
             $entities = $paginator->paginate(
-                    $curriculums, $this->get('request')->query->get('page', 1)/* page number */, 10/* limit per page */
+                $curriculums,
+                $this->get('request')->query->get('page', 1)/* page number */,
+                10/* limit per page */
             );
         }
 
@@ -61,7 +68,8 @@ class CurriculumController extends Controller {
      * @Route("/{id}/show", name="curriculum_show")
      * @Template()
      */
-    public function showAction($id) {
+    public function showAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Curriculum')->find($id);
@@ -84,7 +92,8 @@ class CurriculumController extends Controller {
      * @Route("/new", name="curriculum_new")
      * @Template()
      */
-    public function newAction() {
+    public function newAction()
+    {
 
         if (false === $this->get('security.context')->isGranted('ROLE_ALUMNO')) {
             throw new AccessDeniedException('No tiene permisos suficientes');
@@ -106,13 +115,14 @@ class CurriculumController extends Controller {
      * @Method("POST")
      * @Template("CurriculumBundle:Curriculum:new.html.twig")
      */
-    public function createAction(Request $request) {
+    public function createAction(Request $request)
+    {
         $entity = new Curriculum();
 //        $form = $this->createForm(new CurriculumType(), $entity);
 
         $form = $this->createForm(new CurriculumPersonasType(), $entity);
 
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
 
@@ -145,7 +155,8 @@ class CurriculumController extends Controller {
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add(
-                    'success', 'Curriculum creado correctamente.'
+                'success',
+                'Curriculum creado correctamente.'
             );
 
             return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $entity->getId())));
@@ -163,7 +174,8 @@ class CurriculumController extends Controller {
      * @Route("/{id}/edit", name="curriculum_edit")
      * @Template()
      */
-    public function editAction(Request $request, $id) {
+    public function editAction(Request $request, $id)
+    {
         if (false === $this->get('security.context')->isGranted('ROLE_ALUMNO')) {
 
             throw new AccessDeniedException('No tiene permisos suficientes');
@@ -200,11 +212,18 @@ class CurriculumController extends Controller {
             $antecentesOriginal[] = $antecedenteLaboral;
         }
 
-        $editForm = $this->createForm(new CurriculumPersonasType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(
+            new CurriculumPersonasType(),
+            $entity,
+            array(
+                'action' => $this->generateUrl('curriculum_edit', array('id' => $entity->getId())),
+                'attr' => array('class' => 'form-horizontal')
+            )
+        );
+
 
         if ($request->isMethod("POST")) {
-            $editForm->bind($request);
+            $editForm->handleRequest($request);
             if ($editForm->isValid()) {
 
                 foreach ($entity->getPersona()->getDomicilio() as $domicilio) {
@@ -330,7 +349,8 @@ class CurriculumController extends Controller {
                 $em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
-                        'success', 'Curriculum actualizado correctamente.'
+                    'success',
+                    'Curriculum actualizado correctamente.'
                 );
 
                 return $this->redirect($this->generateUrl('curriculum_edit', array('id' => $id)));
@@ -340,7 +360,6 @@ class CurriculumController extends Controller {
         return array(
             'entity' => $entity,
             'form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -351,7 +370,8 @@ class CurriculumController extends Controller {
      * @Method("POST")
      * @Template("CurriculumBundle:Curriculum:edit.html.twig")
      */
-    public function updateAction(Request $request, $id) {
+    public function updateAction(Request $request, $id)
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('CurriculumBundle:Curriculum')->find($id);
@@ -362,7 +382,7 @@ class CurriculumController extends Controller {
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new CurriculumType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -384,9 +404,10 @@ class CurriculumController extends Controller {
      * @Route("/{id}/delete", name="curriculum_delete")
      * @Method("POST")
      */
-    public function deleteAction(Request $request, $id) {
+    public function deleteAction(Request $request, $id)
+    {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -403,18 +424,19 @@ class CurriculumController extends Controller {
         return $this->redirect($this->generateUrl('curriculum'));
     }
 
-    private function createDeleteForm($id) {
+    private function createDeleteForm($id)
+    {
         return $this->createFormBuilder(array('id' => $id))
-                        ->add('id', 'hidden')
-                        ->getForm()
-        ;
+            ->add('id', 'hidden')
+            ->getForm();
     }
 
     /**
      * @Route("/area", name="select_area")
      * @Template()
      */
-    public function areaAction() {
+    public function areaAction()
+    {
         //$country_id = $this->getRequest()->request->get('country_id');
 
         $em = $this->getDoctrine()->getManager();
@@ -430,7 +452,8 @@ class CurriculumController extends Controller {
      * @Route("/subareas", name="select_subareas")
      * @Template()
      */
-    public function subareasAction() {
+    public function subareasAction()
+    {
         $area_id = $this->getRequest()->request->get('area_id');
 
         $em = $this->getDoctrine()->getManager();
@@ -444,7 +467,8 @@ class CurriculumController extends Controller {
         );
     }
 
-    public function imprimirAction($id) {
+    public function imprimirAction($id)
+    {
         $em = $this->getDoctrine()->getManager();
         $curriculum = $em->getRepository('CurriculumBundle:Curriculum')->findOneById($id);
 
@@ -454,21 +478,29 @@ class CurriculumController extends Controller {
         }
 
 
-        $html = $this->renderView('CurriculumBundle:Curriculum:curriculum.pdf.twig', array(
-            "curriculum" => $curriculum
-        ));
+        $html = $this->renderView(
+            'CurriculumBundle:Curriculum:curriculum.pdf.twig',
+            array(
+                "curriculum" => $curriculum
+            )
+        );
+
 //        return new Response($html);
 
         return new Response(
-                $this->get('knp_snappy.pdf')->getOutputFromHtml($html, array('margin-left' => '1cm',
+            $this->get('knp_snappy.pdf')->getOutputFromHtml(
+                $html,
+                array(
+                    'margin-left' => '1cm',
                     'margin-right' => '1cm',
                     'margin-top' => '1cm',
                     'margin-bottom' => '1cm',
-                )), 200, array(
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="Curriculum de ' . $curriculum->getPersona()->getNombre() .
-            ' ' . $curriculum->getPersona()->getApellido() . '.pdf"'
                 )
+            ), 200, array(
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="Curriculum de '.$curriculum->getPersona()->getNombre().
+                    ' '.$curriculum->getPersona()->getApellido().'.pdf"'
+            )
         );
     }
 

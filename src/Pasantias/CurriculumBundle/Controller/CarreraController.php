@@ -91,7 +91,7 @@ class CarreraController extends Controller
     {
         $entity  = new Carrera();
         $form = $this->createForm(new CarreraType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -156,7 +156,7 @@ class CarreraController extends Controller
 
         
         $editForm = $this->createForm(new CarreraType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -184,7 +184,7 @@ class CarreraController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

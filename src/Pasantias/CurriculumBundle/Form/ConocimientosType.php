@@ -4,7 +4,7 @@ namespace Pasantias\CurriculumBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Pasantias\CurriculumBundle\Form\EventListener\AddSubAreaFieldSubscriber;
 use Pasantias\CurriculumBundle\Form\EventListener\AddAreaFieldSubscriber;
 
@@ -33,7 +33,7 @@ class ConocimientosType extends AbstractType {
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Pasantias\CurriculumBundle\Entity\Conocimientos'
         ));

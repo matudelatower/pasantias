@@ -85,7 +85,7 @@ class TiposTrabajoController extends Controller {
     public function createAction(Request $request) {
         $entity = new TiposTrabajo();
         $form = $this->createForm(new TiposTrabajoType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -147,7 +147,7 @@ class TiposTrabajoController extends Controller {
 
 
         $editForm = $this->createForm(new TiposTrabajoType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -174,7 +174,7 @@ class TiposTrabajoController extends Controller {
      */
     public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

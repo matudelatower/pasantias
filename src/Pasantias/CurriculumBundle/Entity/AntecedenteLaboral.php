@@ -41,10 +41,10 @@ class AntecedenteLaboral {
     /** @ORM\Column(type="text") */
     private $descripcion;
 
-    /** @ORM\Column(name="nombre_contacto",type="string", length=100) */
+    /** @ORM\Column(name="nombre_contacto",type="string", length=100, nullable=true) */
     private $nombreContacto;
 
-    /** @ORM\Column(name="tel_contacto",type="string", length=100) */
+    /** @ORM\Column(name="tel_contacto",type="string", length=100, nullable=true) */
     private $telContacto;
     
 

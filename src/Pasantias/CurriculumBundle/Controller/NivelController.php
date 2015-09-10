@@ -86,7 +86,7 @@ class NivelController extends Controller {
     public function createAction(Request $request) {
         $entity = new Nivel();
         $form = $this->createForm(new NivelType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -148,7 +148,7 @@ class NivelController extends Controller {
 
 
         $editForm = $this->createForm(new NivelType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -175,7 +175,7 @@ class NivelController extends Controller {
      */
     public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

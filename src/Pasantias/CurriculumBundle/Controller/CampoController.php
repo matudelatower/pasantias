@@ -86,7 +86,7 @@ class CampoController extends Controller {
     public function createAction(Request $request) {
         $entity = new Campo();
         $form = $this->createForm(new CampoType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -148,7 +148,7 @@ class CampoController extends Controller {
 
 
         $editForm = $this->createForm(new CampoType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -171,7 +171,7 @@ class CampoController extends Controller {
      */
     public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

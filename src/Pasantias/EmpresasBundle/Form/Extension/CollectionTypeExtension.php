@@ -4,7 +4,7 @@ namespace Pasantias\EmpresasBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @author Adrien Brault <adrien.brault@gmail.com>
@@ -24,7 +24,7 @@ class CollectionTypeExtension extends AbstractTypeExtension {
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'prototype_data' => null,
         ));

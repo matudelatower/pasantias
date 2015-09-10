@@ -22,7 +22,8 @@
 
 <div class="row">
 {#<form action="{{ path('curriculum_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>#}
-<form class="form-horizontal" action="{{ path('curriculum_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+{#<form class="form-horizontal" action="{{ path('curriculum_edit', { 'id': entity.id }) }}" method="post" >#}
+    {{ form_start(form) }}
     <ul class="nav nav-tabs" style="margin-bottom: 15px;">
         <li class="active"><a href="#datos-personales" data-toggle="tab">Datos Personales</a></li>
         <li><a href="#formacion-academica" data-toggle="tab">Formación Académica</a></li>

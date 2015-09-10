@@ -4,7 +4,7 @@ namespace Pasantias\CurriculumBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormacionAcademicaType extends AbstractType {
 
@@ -15,18 +15,16 @@ class FormacionAcademicaType extends AbstractType {
                 ->add('estadoAvance','text',array(
                     'label' => 'Estado Avance',
                 ))
-//            ->add('carrera')
                 ->add('carrera', 'entity', array(
                     'required' => true,
                     'empty_value' => 'Seleccionar',
                     'class' => 'CurriculumBundle:Carrera',
-                    'property' => 'nombre',
+                    'choice_label' => 'nombre',
                 ))
-//            ->add('persona')
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Pasantias\CurriculumBundle\Entity\FormacionAcademica'
         ));

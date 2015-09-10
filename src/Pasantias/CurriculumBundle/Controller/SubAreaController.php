@@ -85,7 +85,7 @@ class SubAreaController extends Controller {
     public function createAction(Request $request) {
         $entity = new SubArea();
         $form = $this->createForm(new SubAreaType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -147,7 +147,7 @@ class SubAreaController extends Controller {
 
 
         $editForm = $this->createForm(new SubAreaType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -170,7 +170,7 @@ class SubAreaController extends Controller {
      */
     public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

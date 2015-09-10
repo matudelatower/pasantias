@@ -4,7 +4,7 @@ namespace Pasantias\CurriculumBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Pasantias\CurriculumBundle\Form\EventListener\AddLocalidadFieldSubscriber;
 use Pasantias\CurriculumBundle\Form\EventListener\AddProvinciaFieldSubscriber;
@@ -30,27 +30,11 @@ class DomicilioType extends AbstractType {
                     'required' => false,
                 ))
 
-//                ->add('localidad', 'entity', array(
-//                    'required' => true,
-//                    'empty_value' => 'Seleccionar',
-//                    'class' => 'UbicacionBundle:Localidades',
-//                    'property' => 'Localidades',
-//                ))
-//                ->add('provincias', 'entity', array(
-//                    'required' => false,
-//                    'empty_value' => 'Seleccionar',
-//                    'class' => 'UbicacionBundle:Provincias',
-//                    'property' => 'nombreProvincia',
-//                ))
-//                ->add('localidad', 'choice', array(
-//                    'choices' => Array(),
-//                    'empty_value' => 'Seleccionar',))
-//                
 
         ;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Pasantias\CurriculumBundle\Entity\Domicilio'
         ));

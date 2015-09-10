@@ -124,7 +124,7 @@ class SolicitudesController extends Controller {
     public function createAction(Request $request) {
         $entity = new Solicitudes();
         $form = $this->createForm(new SolicitudesType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -185,7 +185,7 @@ class SolicitudesController extends Controller {
 
 
         $editForm = $this->createForm(new SolicitudesType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -208,7 +208,7 @@ class SolicitudesController extends Controller {
      */
     public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();

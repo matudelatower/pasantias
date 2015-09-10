@@ -76,7 +76,7 @@ class UsuariosController extends Controller {
     public function createAction(Request $request) {
         $entity = new Usuarios();
         $form = $this->createForm(new UsuariosType(), $entity);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -140,7 +140,7 @@ class UsuariosController extends Controller {
 
 //        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new UsuariosType(), $entity);
-        $editForm->bind($request);
+        $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $factory = $this->get('security.encoder_factory');
@@ -174,7 +174,7 @@ class UsuariosController extends Controller {
      */
     public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
